@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "test-province-employments": "newman run https://www.getpostman.com/collections/62193d74f6cf19a7e782"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/gti-sos/SOS1819-jun-jad/issues"
   },
-  "homepage": "https://github.com/gti-sos/SOS1819-jun-jad#readme"
+  "homepage": "https://github.com/gti-sos/SOS1819-jun-jad#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
