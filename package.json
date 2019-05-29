@@ -1,0 +1,19 @@
+{
+  "name": "sos1819-jun-jad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gti-sos/SOS1819-jun-jad.git"
+  },
+  "author": "Juanma Arteaga Delgado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gti-sos/SOS1819-jun-jad/issues"
+  },
+  "homepage": "https://github.com/gti-sos/SOS1819-jun-jad#readme"
+}
