@@ -1,84 +1,83 @@
-// API REST JUANMA (ENTREGABLE D01)
-
-// SOS1819-13/gasAPI/v1/province-employments/provinceEmployments.js
-
-const MongoClient = require("mongodb").MongoClient;
-const uri_jma = "mongodb+srv://jmad:jmad@cluster0-oxc4d.mongodb.net/cluster0?retryWrites=true";
-const client_jma = new MongoClient(uri_jma, { useNewUrlParser: true });
-
-var provinceEmployments;
-
-client_jma.connect(err => {
-    provinceEmployments = client_jma.db("sos1819-jma").collection("employments");
-    console.log("Connected!");
-});
-
-module.exports = function(app, BASE_PATH){
+module.exports = function(app, BASE_PATH, provinceEmployments){
+   
     var path = "";
-    var newProvinceEmployments = [{
-        "province": "cadiz",
-        "year": "2018",
-        "industryEmployment": "44250",
-        "buildingEmployment": "35575",
-        "servicesEmployment": "373400"
-    }, {
-        "province": "madrid",
-        "year": "2018",
-        "industryEmployment": "267500",
-        "buildingEmployment": "195175",
-        "servicesEmployment": "2709675"
-    }, {
-        "province": "sevilla",
-        "year": "2018",
-        "industryEmployment": "79950",
-        "buildingEmployment": "49325",
-        "servicesEmployment": "639775"
-    }, {
-        "province": "madrid",
-        "year": "2017",
-        "industryEmployment": "268725",
-        "buildingEmployment": "166250",
-        "servicesEmployment": "2660950"
-    }, {
-        "province": "sevilla",
-        "year": "2017",
-        "industryEmployment": "81450",
-        "buildingEmployment": "43525",
-        "servicesEmployment": "627850"
-    }];
-
-
-    // GET /province-employments/docs/ -> Acceso a coleccion llamadas Postman sobre API
+  
+    // GET /api/v1/province-employments/docs/ -> Acceso a coleccion llamadas Postman sobre API
     
     path = BASE_PATH + "/province-employments/docs";
+    
     app.get(path, (req,res)=>{
         res.redirect("https://documenter.getpostman.com/view/6911518/S1EH21Zi");
-    
-    // docs F04: https://documenter.getpostman.com/view/6911518/S17tS8bm
     });
-
-
-    // GET province-employments/loadInitialData -> LOAD INITIAL DATA
+   
+   
+    // GET province-employments/loadInitialData -> Datos iniciales a cargar en BD si está vacía
     
     path = BASE_PATH + "/province-employments/loadInitialData";
+    
     app.get(path, (req,res)=>{
-        
+        var newProvinceEmployments = [{
+            "province": "cadiz",
+            "year": "2018",
+            "industryEmployment": "44250",
+            "buildingEmployment": "35575",
+            "servicesEmployment": "373400"
+        }, {
+            "province": "madrid",
+            "year": "2018",
+            "industryEmployment": "267500",
+            "buildingEmployment": "195175",
+            "servicesEmployment": "2709675"
+        }, {
+            "province": "sevilla",
+            "year": "2018",
+            "industryEmployment": "79950",
+            "buildingEmployment": "49325",
+            "servicesEmployment": "639775"
+        }, {
+            "province": "madrid",
+            "year": "2017",
+            "industryEmployment": "268725",
+            "buildingEmployment": "166250",
+            "servicesEmployment": "2660950"
+        }, {
+            "province": "sevilla",
+            "year": "2017",
+            "industryEmployment": "81450",
+            "buildingEmployment": "43525",
+            "servicesEmployment": "627850"
+        }];
+
         provinceEmployments.find({}).toArray((error,provinceEmploymentsArray)=>{
-        
-            if(provinceEmploymentsArray.length!=0){
-                res.sendStatus(409);
-            } else {
-                provinceEmployments.remove();
-                newProvinceEmployments.filter((d) =>{
-                    provinceEmployments.insert(d);
-                });
-                res.sendStatus(200);
+            if (error) {
+                console.error("Load Initial Data: Error accesing to DB employments");
+                res.sendStatus(500);        // Internal Server Error
+            }
+            
+            if (provinceEmploymentsArray.length!=0){        //BD con datos. No se puede realizar peticion
+                console.log("DB employments is not empty. Load Initial Data not performed");
+                res.sendStatus(409);        // Conflict
+            
+            } else {        //BD vacía. Se cargan datos iniciales
+                console.log("DB employments is empty. Loading Initial Data...");
+                provinceEmployments.insertMany(newProvinceEmployments);
+                res.sendStatus(200);        // Ok
             }
         });
     });
     
     
-    // GET /province-employments
+    // DELETE /province-employments -> Borrado del conjunto de recursos
+    
+    path = BASE_PATH + "/province-employments";
+    
+    app.delete(path, (req, res) => {
+        provinceEmployments.remove();
+        res.sendStatus(200);
+    });
+    
+    
+/*  // GET /province-employments
     
     path = BASE_PATH + "/province-employments";
     app.get(path, (req,res)=>{
@@ -279,19 +278,7 @@ module.exports = function(app, BASE_PATH){
         }
         });
     });
-    
-    
-    // DELETE /province-employments
-    
-    path = BASE_PATH + "/province-employments";
-     app.delete(path, (req, res) => {
-            
-           provinceEmployments.remove();
-           res.sendStatus(200);
-        
-    });
-    
-    
+
     // DELETE a un recurso -> /province-employments/province/year
     
     path = BASE_PATH + "/province-employments/:province/:year";
@@ -320,4 +307,6 @@ module.exports = function(app, BASE_PATH){
                 res.sendStatus(200);
         });
     });
-}
+*/
+
+};
