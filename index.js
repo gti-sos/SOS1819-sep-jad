@@ -24,9 +24,9 @@ const client_jma = new MongoClient(uri_jma, { useNewUrlParser: true });
 
 var provinceEmployments;
 
-client_jma.connect(err => {
-    if (err) {
-        console.error("Error accesing to DB employments: " + err);
+client_jma.connect(error => {
+    if (error) {
+        console.error("Error accesing to DB employments: " + error);
         process.exit(1);
     }
     
