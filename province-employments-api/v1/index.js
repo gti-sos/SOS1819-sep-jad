@@ -9,7 +9,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     app.get(path, (req,res)=>{
         res.redirect("https://documenter.getpostman.com/view/6911518/S1EH21Zi");
     });
-   
+ 
    
     // GET /api/v1/province-employments/loadInitialData -> Datos iniciales a cargar en BD si está vacía
     
