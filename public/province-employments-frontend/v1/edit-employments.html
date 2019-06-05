@@ -1,0 +1,46 @@
+<h1>Editar Estadísticas de Empleo</h1>
+<table class="table">
+    <thead>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <tr>
+            <th>Provincia</th>
+            <th>Año</th>
+            <th>Industria</th>
+            <th>Construcción</th>
+            <th>Servicios</th>
+            <th>Acciones</th> 
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ provinceEmployment.province }}</td>
+            <td>{{ provinceEmployment.year }}</td>
+            <td>
+                <input 
+                    class="form-control"
+                    ng-model="provinceEmployment.industryEmployment"
+                />
+            </td>
+            <td>
+                <input 
+                    class="form-control"
+                    ng-model="provinceEmployment.buildingEmployment"
+                />
+            </td>
+            <td>
+                <input 
+                    class="form-control"
+                    ng-model="provinceEmployment.servicesEmployment"
+                />
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary"
+                    ng-click="updateProvinceEmployment(provinceEmployment.province,provinceEmployment.year)";
+                >Actualizar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="alert alert-success">
+    <h2>Estado: {{status}}</h2>
+</div>

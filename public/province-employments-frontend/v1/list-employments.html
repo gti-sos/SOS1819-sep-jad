@@ -1,0 +1,125 @@
+<h1> Estadísticas de empleo</h1>
+<table class="table">
+    <thead>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <tr>
+            <th>Provincia</th>
+            <th>Año</th>
+            <th>Industria</th>
+            <th>Construcción</th>
+            <th>Servicios</th>
+            <th>Acciones</th> 
+        </tr>
+    </thead>
+   <tbody>
+        <tr ng-repeat="provinceEmployment in provinceEmployments">
+            <td><a href="#!/ui/v1/province-employments/edit/{{ provinceEmployment.province }}/{{ provinceEmployment.year }}">{{ provinceEmployment.province }}</a></td>
+            <td>{{ provinceEmployment.year }}</td>
+            <td>{{ provinceEmployment.industryEmployment }}</td>
+            <td>{{ provinceEmployment.buildingEmployment }}</td>           
+            <td>{{ provinceEmployment.servicesEmployment }}</td>           
+            <td>
+                <button
+                    class="btn btn-danger"
+                    ng-click="deleteProvinceEmployment(provinceEmployment.province,provinceEmployment.year)";
+                >Borrar</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input
+                    class="form-control" 
+                    ng-model="newProvinceEmployment.province"
+                    value="new name"
+                />
+            </td>
+            <td>
+                <input
+                    class="form-control"
+                    ng-model="newProvinceEmployment.year"
+                    value="new year"
+                />
+            </td>
+           <td>
+                <input
+                    class="form-control" 
+                    ng-model="newProvinceEmployment.industryEmployment"
+                    value="new industryEmployment"
+                />
+            </td>
+            <td>
+                <input
+                    class="form-control" 
+                    ng-model="newProvinceEmployment.buildingEmployment"
+                    value="new buildingEmployment"
+                />
+            </td>
+            <td>
+                <input
+                    class="form-control" 
+                    ng-model="newProvinceEmployment.servicesEmployment"
+                    value="new servicesEmployment"
+                />
+            </td>
+            <td>
+                <button
+                    class="btn btn-primary"
+                    ng-click="addProvinceEmployment()"
+                >Añadir</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="container-fluid">
+    <div>
+        <div class="col-sm" style="background-color:lightblue;">
+            <label>
+                Busqueda por provincia: 
+                <input
+                    class="form-control text-center" size="50" ng-model="searchProvince"
+                />
+            </label>
+            <button
+                class="btn btn-primary btn-xs"
+                ng-click="searchByProvince()"
+            >Buscar</button>
+        </div>
+        <hr/>
+        <div class="col-sm" style="background-color:lightblue;">
+            <label for="">
+                Búsqueda por años. Desde:
+                <input
+                    class="text-center" name="" ng-model="fromYear"
+                />
+                <label for=""> 
+                    hasta:
+                </label>
+                <input 
+                    class="text-center" type="text" ng-model="toYear"
+                />
+                <button
+                    class="btn btn-primary btn-xs"
+                    ng-click="searchByYear()"
+                >Buscar</button>
+            </label>
+        </div>
+        <hr/>
+        <div class="alert alert-success">
+            <h2>Estado: {{status}}</h2>
+        </div>
+    </div>
+    <div>
+        <p align="center">
+            <button
+                class="btn btn-primary"
+                ng-click="getBack()"
+                value="back"
+            > ◄ </button>
+            <button
+                class="btn btn-primary" 
+                ng-click="getNext()"
+                value="next"
+            > ► </button>
+    </div>
+</div>
+
