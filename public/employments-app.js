@@ -2,7 +2,7 @@
 
 angular
     .module("EmploymentsApp",["ngRoute"])
-    .config(function ($routeProvider){
+    .config(function($routeProvider) {
         $routeProvider
             .when("/", {
                 templateUrl: "index.html"

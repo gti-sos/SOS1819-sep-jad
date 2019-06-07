@@ -275,7 +275,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
 
                 } else {
                     provinceEmployments.insert(newProvinceEmployments);
-                    console.log("Created resource");
+                    console.log("Created resource: "+ newProvinceEmployments["province"] + " " + newProvinceEmployments["year"]);
                     res.sendStatus(201);        // 201 Created
                 }
             });
@@ -377,6 +377,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             } else {
                 // Existe un recurso con esa identificación en BD: Lo eliminamos de la BD
                 provinceEmployments.remove({"province": province,"year": year});
+                console.log("Deleted resource: " + province + " " + year);
                 res.sendStatus(200);        // 200 Ok
             }
         });

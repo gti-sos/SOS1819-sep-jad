@@ -1,7 +1,7 @@
 <h1> Estadísticas de empleo</h1>
 <table class="table">
     <thead>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <!-- para que salga la ñ y acentos <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
         <tr>
             <th>Provincia</th>
             <th>Año</th>
@@ -22,6 +22,7 @@
                 <button
                     class="btn btn-danger"
                     ng-click="deleteProvinceEmployment(provinceEmployment.province,provinceEmployment.year)";
+                    value="delete"
                 >Borrar</button>
             </td>
         </tr>
@@ -30,41 +31,37 @@
                 <input
                     class="form-control" 
                     ng-model="newProvinceEmployment.province"
-                    value="new name"
                 />
             </td>
             <td>
                 <input
                     class="form-control"
                     ng-model="newProvinceEmployment.year"
-                    value="new year"
                 />
             </td>
            <td>
                 <input
                     class="form-control" 
                     ng-model="newProvinceEmployment.industryEmployment"
-                    value="new industryEmployment"
                 />
             </td>
             <td>
                 <input
                     class="form-control" 
                     ng-model="newProvinceEmployment.buildingEmployment"
-                    value="new buildingEmployment"
                 />
             </td>
             <td>
                 <input
                     class="form-control" 
                     ng-model="newProvinceEmployment.servicesEmployment"
-                    value="new servicesEmployment"
                 />
             </td>
             <td>
                 <button
                     class="btn btn-primary"
                     ng-click="addProvinceEmployment()"
+                    value="add"
                 >Añadir</button>
             </td>
         </tr>

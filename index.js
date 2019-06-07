@@ -14,7 +14,7 @@ var port = process.env.PORT || 8080;
 
 app.use("/", express.static(path.join(__dirname,"public")));
 
-// app.use("/ui/v1/province-employments", express.static(path.join(__dirname, "public/province-employments")));
+// app.use("/ui/v1/province-employments", express.static(path.join(__dirname, "public/province-employments-frontend")));
 
 var provinceEmploymentsAPI = require("./province-employments-api");
 
