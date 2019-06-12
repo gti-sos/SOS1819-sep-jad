@@ -18,8 +18,8 @@ angular
                     .filter(function(d) {if(d.province == province) return d;})  
                     .sort(function(a, b) {
                         return parseInt(b.year) - parseInt(a.year);
-                });
-
+                    });
+                    
                 Highcharts.chart('province_container', {
                     chart: {
                         type: 'bar'
@@ -31,7 +31,7 @@ angular
                         text: 'Province: Sevilla'
                     },
                     xAxis: {
-                        categories: dataChart.map(function(d) {return d.year}),
+                        categories: dataChart.map(function(d) {return parseInt(d.year)}),
                         title: {
                             text: 'years'
                         }
@@ -39,7 +39,7 @@ angular
                     yAxis: {
                         min: 30000,
                         title: {
-                            text: 'Employments (ud)',
+                            text: 'employments (ud)',
                             align: 'high'
                         },
                         labels: {
@@ -60,8 +60,8 @@ angular
                         layout: 'vertical',
                         align: 'right',
                         verticalAlign: 'top',
-                        x: -40,
-                        y: 80,
+                        x: 0,
+                        y: 30,
                         floating: true,
                         borderWidth: 1,
                         backgroundColor:
@@ -73,13 +73,13 @@ angular
                     },
                     series: [{
                         name: 'Industry',
-                        data: dataChart.map(function(d) {return parseInt(d.industryEmployment)})
+                        data: dataChart.map(function(d) {return d.industryEmployment})
                     }, {
                         name: 'Building',
-                        data: dataChart.map(function(d) {return parseInt(d.buildingEmployment)})
+                        data: dataChart.map(function(d) {return d.buildingEmployment})
                     }, {
                         name: 'Services',
-                        data: dataChart.map(function(d) {return parseInt(d.servicesEmployment)})
+                        data: dataChart.map(function(d) {return d.servicesEmployment})
                     }]
                 });
             });

@@ -10,8 +10,14 @@ angular
 
             var API = "/api/v1/province-employments";
             var provinceEmployments = [];
-
+            var data = [];
+            var dataChart = [];
+            var year = "2018";
+            
             $http.get(API).then(function(response) {
+                
+                provinceEmployments = response.data;
+                
                 google.charts.load('current', {
                     'packages': ['geochart'],
                     // Note: you will need to get a mapsApiKey for your project.
@@ -19,15 +25,44 @@ angular
                     mapsApiKey: 'AIzaSyCygDfdkLa2XxPmP2-rkSsW_eWPcYLGimc'
                 });
                 google.charts.setOnLoadCallback(drawRegionsMap);
+                
+                function codeComunity(prov) {
+                    var codeProv = ""
+                    var listCode = [{
+                            "province": "barcelona",
+                            "code": "ES-CT"
+                        },{
+                            "province": "madrid",
+                            "code": "ES-MD"
+                        },{
+                            "province": "sevilla",
+                            "code": "ES-AN" 
+                        },{
+                            "province": "valencia",
+                            "code": "ES-VC"
+                        },{
+                            "province": "vizcaya",
+                            "code": "ES-PV"
+                        }]; 
+                    
+                    listCode.forEach(function(d) {
+                        if (d.province == prov)
+                            codeProv = d.code;
+                        });
+                    
+                    return codeProv;
+                }
 
                 function drawRegionsMap() {
-                    var data = [];
+                    
+                    dataChart = provinceEmployments
+                        .filter(function(d) {if(d.year == year) return d;}); 
 
-                    provinceEmployments = response.data;
-
-                    data.push(['comunidad', 'provincia', 'Industry Employment']);
-                    data.push(['ES-AN', provinceEmployments[0].province, parseInt(provinceEmployments[0].industryEmployment)]);
-                    data.push(['ES-MD', provinceEmployments[1].province, parseInt(provinceEmployments[1].industryEmployment)]);
+                    data.push(['comunidad', 'provincia', 'Industry', 'Building']);
+                    
+                    dataChart.forEach(function (d) {
+                        data.push([codeComunity(d.province), d.province, d.industryEmployment, d.buildingEmployment]);
+                    });
                     
                     var plot = google.visualization.arrayToDataTable(data);
                     

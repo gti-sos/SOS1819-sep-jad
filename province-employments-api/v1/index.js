@@ -7,7 +7,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/docs";
     
     app.get(path, (req,res)=>{
+        
         res.redirect("https://documenter.getpostman.com/view/6911518/S1EH21Zi");
+  
     });
  
    
@@ -16,39 +18,102 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/loadInitialData";
     
     app.get(path, (req,res)=>{
+        
         var newProvinceEmployments = [{
-            "province": "cadiz",
+            "province": "valencia",
+            "year": "2016",
+            "industryEmployment": 173100,
+            "buildingEmployment": 68200,
+            "servicesEmployment": 832300
+        }, {
+            "province": "vizcaya",
             "year": "2018",
-            "industryEmployment": "44250",
-            "buildingEmployment": "35575",
-            "servicesEmployment": "373400"
+            "industryEmployment": 86100,
+            "buildingEmployment": 27200,
+            "servicesEmployment": 379800
         }, {
             "province": "madrid",
             "year": "2018",
-            "industryEmployment": "267500",
-            "buildingEmployment": "195175",
-            "servicesEmployment": "2709675"
+            "industryEmployment": 267500,
+            "buildingEmployment": 195175,
+            "servicesEmployment": 2709675
         }, {
             "province": "sevilla",
             "year": "2018",
-            "industryEmployment": "79950",
-            "buildingEmployment": "49325",
-            "servicesEmployment": "639775"
+            "industryEmployment": 79950,
+            "buildingEmployment": 49325,
+            "servicesEmployment": 639775
+        }, {
+            "province": "madrid",
+            "year": "2016",
+            "industryEmployment": 245200,
+            "buildingEmployment": 161600,
+            "servicesEmployment": 2626300
+        }, {
+            "province": "barcelona",
+            "year": "2017",
+            "industryEmployment": 458000,
+            "buildingEmployment": 154500,
+            "servicesEmployment": 1955100
+        }, {
+            "province": "vizcaya",
+            "year": "2017",
+            "industryEmployment": 94200,
+            "buildingEmployment": 29400,
+            "servicesEmployment": 368700
         }, {
             "province": "madrid",
             "year": "2017",
-            "industryEmployment": "268725",
-            "buildingEmployment": "166250",
-            "servicesEmployment": "2660950"
+            "industryEmployment": 268725,
+            "buildingEmployment": 166250,
+            "servicesEmployment": 2660950
+        }, {
+            "province": "valencia",
+            "year": "2018",
+            "industryEmployment": 191600,
+            "buildingEmployment": 70700,
+            "servicesEmployment": 868800
+        }, {
+            "province": "barcelona",
+            "year": "2018",
+            "industryEmployment": 489000,
+            "buildingEmployment": 159100,
+            "servicesEmployment": 1981800
+        }, {
+            "province": "vizcaya",
+            "year": "2016",
+            "industryEmployment": 95300,
+            "buildingEmployment": 33500,
+            "servicesEmployment": 358700
+        }, {
+            "province": "sevilla",
+            "year": "2016",
+            "industryEmployment": 76700,
+            "buildingEmployment": 45800,
+            "servicesEmployment": 609100
+        }, {
+            "province": "valencia",
+            "year": "2017",
+            "industryEmployment": 191500,
+            "buildingEmployment": 67400,
+            "servicesEmployment": 838000
+        }, {
+            "province": "barcelona",
+            "year": "2016",
+            "industryEmployment": 458700,
+            "buildingEmployment": 137000,
+            "servicesEmployment": 1909600
         }, {
             "province": "sevilla",
             "year": "2017",
-            "industryEmployment": "81450",
-            "buildingEmployment": "43525",
-            "servicesEmployment": "627850"
+            "industryEmployment": 81450,
+            "buildingEmployment": 43525,
+            "servicesEmployment": 627850
         }];
 
+
         provinceEmployments.find({}).toArray((error,provinceEmploymentsArray)=>{
+            
             if (error) {
                 console.error("Load Initial Data: Error accesing to DB employments");
                 res.sendStatus(500);        // 500 Internal Server Error
@@ -72,16 +137,20 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments";
     
     app.get(path, (req,res)=>{
+        
         var from = parseInt(req.query.from);
         var to = parseInt(req.query.to);
         var limit = parseInt(req.query.limit);
         var offset = parseInt(req.query.offset);
-        
+
+/*  Si dejamos este trozo de código, al hacer un get al conjunto de recursos, 
+sólo coge 10 recursos y eso es lo que nos da.
+
         if (!limit && !offset) {
             limit = 10;     
             offset = 0;
         }
-        
+    */
         var province = req.query.province;
         var year = req.query.year;
         var industryEmployment = req.query.industryEmployment;
@@ -90,8 +159,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
         
         if (Number.isInteger(limit) && Number.isInteger(offset) && Number.isInteger(from) && Number.isInteger(to)) {
             provinceEmployments.find({ year: { $gte: from, $lte: to } }).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+              
                 if(error)
                     console.log("Error: " + error);
+                    
                 res.send(provinceEmploymentsArray.map((d)=>{
                     delete d._id;
                     return d;
@@ -100,8 +171,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             
         } else if (year) {
             provinceEmployments.find({year:year}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+                
                 if (error)
                     console.log("Error: " + error);
+                
                 res.send(provinceEmploymentsArray.map((d) => {
                     delete d._id;
                     return d;
@@ -110,8 +183,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             
         } else if (province) {
             provinceEmployments.find({province:province}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+                
                 if (error)
                     console.log("Error: " + error);
+                
                 res.send(provinceEmploymentsArray.map((d) => {
                     delete d._id;
                     return d;
@@ -120,8 +195,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             
         } else if (industryEmployment){
             provinceEmployments.find({industryEmployment: industryEmployment}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+     
                 if (error)
                     console.log("Error: " + error);
+                
                 res.send(provinceEmploymentsArray.map((d) => {
                     delete d._id;
                     return d;
@@ -130,8 +207,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             
         } else if (buildingEmployment){
             provinceEmployments.find({buildingEmployment:buildingEmployment}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+   
                 if (error)
                     console.log("Error: " + error);
+                    
                 res.send(provinceEmploymentsArray.map((d) => {
                     delete d._id;
                     return d;
@@ -140,8 +219,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             
         } else if (servicesEmployment){
             provinceEmployments.find({servicesEmployment:servicesEmployment}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+
                 if (error)
                     console.log("Error" + error);
+                    
                 res.send(provinceEmploymentsArray.map((d) => {
                     delete d._id;
                     return d;
@@ -150,8 +231,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             
         } else {
             provinceEmployments.find({}).skip(offset).limit(limit).toArray((error,provinceEmploymentsArray)=>{
+
                 if(error)
                     console.log("Error" + error);
+
                 res.send(provinceEmploymentsArray.map((d)=>{
                     delete d._id;
                     return d;
@@ -166,6 +249,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/:province";
     
     app.get(path, (req, res) => {
+        
         var province = req.params.province;
         var fromYear = parseInt(req.query.from);
         var toYear = parseInt(req.query.to);
@@ -180,6 +264,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
         if (Number.isInteger(fromYear) && Number.isInteger(toYear)) {
         // Si nos pasan en la URL un periodo de años: from=fromYear&to=toYear 
             provinceEmployments.find({ "province": province, "year": { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+                
                 if (error) {
                     console.log("Error: " + error);
                     res.sendStatus(500);        // 500 Internal Server Error
@@ -199,11 +284,13 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
         } else {
             // No nos pasan un periodo de años. Devolvemos todos los recursos existentes para la provincia dada
             provinceEmployments.find({ "province": province }).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+
                 if (error) {
                     console.log("Error: " + error);
                     res.sendStatus(500);    // 500 Internal Server Error
                     return;
                 }
+                
                 if (provinceEmploymentsArray.length >= 1) {
                     res.send(provinceEmploymentsArray.map((d) => {
                         delete d._id;
@@ -223,13 +310,17 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/:province/:year";
     
     app.get(path, (req, res) => {
+
         var province = req.params.province;
         var year = req.params.year;
         
         provinceEmployments.find({
+            
             "province": province,
             "year": year
+            
             }).toArray((error, provinceEmploymentsArray) => {
+                
                 if (error) {
                     console.error("Error accesing DB: GET province-employments/country/year ");
                     res.sendStatus(500);    // 500 Internal Server Error
@@ -253,6 +344,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments";
     
     app.post(path, (req, res) => {
+ 
         var newProvinceEmployments = req.body;
 
         if (Object.keys(newProvinceEmployments).length != 5 || !newProvinceEmployments.province || !newProvinceEmployments.year || !newProvinceEmployments.industryEmployment || !newProvinceEmployments.buildingEmployment || !newProvinceEmployments.servicesEmployment) {
@@ -261,9 +353,12 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
 
         } else {
             provinceEmployments.find({
+                
                 "province": newProvinceEmployments["province"],
                 "year": newProvinceEmployments["year"]
+                
             }).toArray((error, provinceEmploymentsArray) => {
+                
                 if (error) {
                     console.error("Error accesing DB employments in POST /province-employments");
                     res.sendStatus(500);        // 500 Internal Server Error
@@ -288,7 +383,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/:province/:year";
     
     app.post(path, (req,res)=>{
+
         res.sendStatus(405);       // 405 Method Not Allowed 
+
     });
         
     
@@ -297,7 +394,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments";
     
     app.put(path, (req, res) => {
+
         res.sendStatus(405);        // 405 Method Not Allowed
+
     });
     
   
@@ -306,6 +405,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/:province/:year";
  
     app.put(path, (req, res) => {
+ 
         var province = req.params.province;
         var year = req.params.year;
         var toUpdateProvinceEmployments = req.body;
@@ -318,6 +418,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             provinceEmployments.find({
                 "province": province,
                 "year": year
+            
             }).toArray((error, provinceEmploymentsArray) => {
                 if (error) {
                     console.error("Error accesing DB employments in PUT /province-employments/province/year");
@@ -349,8 +450,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments";
     
     app.delete(path, (req, res) => {
+        
         provinceEmployments.remove();
         res.sendStatus(200);
+
     });
     
     
@@ -359,17 +462,22 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     path = BASE_PATH + "/province-employments/:province/:year";
     
     app.delete(path, (req,res)=>{
+
         var province = req.params.province;
         var year = req.params.year;
 
         provinceEmployments.find({
+ 
             "province": province,
             "year": year
+
         }).toArray((error, provinceEmploymentsArray) => {
+ 
             if (error) {
                 console.error("Error accesing DB employments in DELETE /province-employments/province/year");
                 res.sendStatus(500);        // 500 Internal Server Error
             }
+
             if (provinceEmploymentsArray.length == 0) {        // No existe un recurso con la identificacion (province-year) pasada en URL
                 console.log("Resource: " + province + " " + year + " doesn´t exist in DB");
                 res.sendStatus(404);        // 404 Not Found (recurso no encontrado)
@@ -382,5 +490,4 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
             }
         });
     });
-
 };
