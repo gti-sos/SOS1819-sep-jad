@@ -2,8 +2,11 @@
 
 angular
     .module("EmploymentsApp",["ngRoute"])
+    
     .config(function($routeProvider) {
+        
         $routeProvider
+            
             .when("/", {
                 templateUrl: "index.html"
                 
@@ -22,8 +25,27 @@ angular
             }).when("/analytics/geochart",{
                 controller: "GeochartEmploymentsCtrl",
                 templateUrl: "analytics/geochart-employments.html"
-            });
+                
+            }).when("/analytics/chartist",{
+                controller: "ChartistEmploymentsCtrl",
+                templateUrl: "analytics/chartist-employments.html"
+                
+            }).when("/integrations/employments-students", {
+                controller: "EmploymentsStudentsCtrl",
+                templateUrl: "integrations/employments-students.html"
 
-    });
+            }).when("/integrations/employments-deceaseds", {
+                controller: "EmploymentsDeceasedsCtrl",
+                templateUrl: "integrations/employments-deceaseds.html"
+
+            }).when("/integrations/weather", {
+                controller: "WeatherCtrl",
+                templateUrl: "integrations/weather-city.html"
+
+            }).when("/integrations/coins", {
+                controller: "CoinsCtrl",
+                templateUrl: "integrations/coins.html"
+            });
+        });
             
-console.log("Employments App Initialized!");
+    console.log("Employments App Initialized!");

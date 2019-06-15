@@ -29,6 +29,9 @@ angular
                 function codeComunity(prov) {
                     var codeProv = ""
                     var listCode = [{
+                            "province": "badajoz",
+                            "code": "ES-EX"
+                        },{
                             "province": "barcelona",
                             "code": "ES-CT"
                         },{

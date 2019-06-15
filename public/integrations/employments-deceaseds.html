@@ -1,0 +1,23 @@
+<h1 align=center>Deaths due to traffic accidents in Spain</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Provincia</th>
+            <th>Año</th>
+            <th>Vidas</th>
+            <th>Multa</th>
+            <th>Nº muertos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="deceased in deceaseds">
+            <td>{{deceased.province}}</td>
+            <td>{{deceased.year}}</td>
+            <td>{{deceased.life}}</td>
+            <td>{{deceased.penalty}}</td>
+            <td>{{deceased.number}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div id="integration_SOS_14_container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
