@@ -17,7 +17,7 @@
   - External with CORS to API AwesomeAPI Exchange: http://sos1819-jun-jad.herokuapp.com/#!/integrations/coins
   - Internal with CORS to API deceaseds (grupo SOS14): http://sos1819-jun-jad.herokuapp.com/#!/integrations/employments-deceaseds
   - Internal with CORS to API Andalusian students (grupo SOS05): http://sos1819-jun-jad.herokuapp.com/#!/integrations/employments-students
-- **About**:  
-  - Video: http://sos1819-jun-jad.herokuapp.com/#!/about
+- **About**:  http://sos1819-jun-jad.herokuapp.com/#!/about
+  - Video: https://youtu.be/BuXPAdMMAK8
 - **Docker**:
     docker run -p 8080:8080 -d arteagajuanma/sos1819-jun-jad
