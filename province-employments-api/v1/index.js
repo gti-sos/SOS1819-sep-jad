@@ -19,7 +19,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     
     app.get(path, (req,res)=>{
         
-        var newProvinceEmployments = [{
+        var newProvinceEmployments = [{         // Array de objetos (recursos)
             "province": "valencia",
             "year": "2016",
             "industryEmployment": 173100,
@@ -129,7 +129,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                 console.log("DB employments is not empty. Load Initial Data not performed");
                 res.sendStatus(409);        // 409 Conflict
             
-            } else {        //BD vacía. Se cargan datos iniciales
+            } else {                        //BD vacía. Se cargan datos iniciales
                 console.log("DB employments is empty. Loading Initial Data...");
                 provinceEmployments.insertMany(newProvinceEmployments);
                 res.sendStatus(200);        // 200 Ok
@@ -151,177 +151,204 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     });
     
 
-    // GET /api/v1/province-employments -> Acceder a todos los recursos con busqueda por intervalo. Los resultados se muestran paginados.
+    // GET /api/v1/province-employments -> Acceder a todos los recursos con busqueda por tipo de recurso e intervalo. Los resultados se muestran paginados.
     
     path = BASE_PATH + "/province-employments";
     
     app.get(path, (req,res)=>{
         
-        var from = parseInt(req.query.from);
-        var to = parseInt(req.query.to);
         var limit = parseInt(req.query.limit);
         var offset = parseInt(req.query.offset);
-
-/*  Si dejamos este trozo de código, al hacer un get al conjunto de recursos, 
-sólo coge 10 recursos y eso es lo que nos da.
-
+        
         if (!limit && !offset) {
-            limit = 10;     
+            limit = 0;     
             offset = 0;
         }
-    */
-        var province = req.query.province;
-        var year = req.query.year;
-        var industryEmployment = req.query.industryEmployment;
-        var buildingEmployment = req.query.buildingEmployment;
-        var servicesEmployment = req.query.servicesEmployment;
         
-        if (Number.isInteger(limit) && Number.isInteger(offset) && Number.isInteger(from) && Number.isInteger(to)) {
-            provinceEmployments.find({ year: { $gte: from, $lte: to } }).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-              
-                if(error)
-                    console.log("Error: " + error);
+        var province = req.query.province;
+        var fromYear = req.query.from;
+        var toYear = req.query.to;
+        var year = req.query.year;
+        var fromIndustryEmployment = parseInt(req.query.fromIndustry);
+        var toIndustryEmployment = parseInt(req.query.toIndustry);
+        var fromBuildingEmployment = parseInt(req.query.fromBuilding);
+        var toBuildingEmployment = parseInt(req.query.toBuilding);
+        var fromServicesEmployment = parseInt(req.query.fromServices);
+        var toServicesEmployment = parseInt(req.query.toServices);
+
+        provinceEmployments.find({}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+            if (error) {
+                console.log("Error: " + error);
+                res.sendStatus(500);        // 500 Internal Server Error
+                return;  
+            }
+
+            if  (province && fromYear && toYear) {
+                provinceEmployments.find({ province: province, year: { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
                     
+                    res.send(filteredEmploymentsArray.map((d)=>{
+                        delete d._id;
+                        return d;
+                    }));
+                });      
+            
+            
+            } else if (fromYear && toYear) {
+                provinceEmployments.find({ year: { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
+                    
+                    res.send(filteredEmploymentsArray.map((d)=>{
+                        delete d._id;
+                        return d;
+                    }));
+                });
+                
+            } else if (year) {
+                provinceEmployments.find({ year:year }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+                    
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
+                    
+                    res.send(filteredEmploymentsArray.map((d) => {
+                        delete d._id;
+                        return d;
+                    }));
+                });
+                
+            } else if (province) {
+                provinceEmployments.find({province:province}).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
+                   
+                    res.send(filteredEmploymentsArray.map((d) => {
+                        delete d._id;
+                        return d;
+                    }));
+                });
+                
+            } else if (fromIndustryEmployment && toIndustryEmployment){
+                provinceEmployments.find({industryEmployment: { $gte: fromIndustryEmployment, $lte: toIndustryEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
+                   
+                    res.send(filteredEmploymentsArray.map((d) => {
+                        delete d._id;
+                        return d;
+                    }));
+                });
+
+            } else if (fromBuildingEmployment && toBuildingEmployment){
+                provinceEmployments.find({buildingEmployment: { $gte: fromBuildingEmployment, $lte: toBuildingEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
+                   
+                    res.send(filteredEmploymentsArray.map((d) => {
+                        delete d._id;
+                        return d;
+                    }));
+                });
+                
+            } else if (fromServicesEmployment && toServicesEmployment){
+                provinceEmployments.find({servicesEmployment: { $gte: fromServicesEmployment, $lte: toServicesEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+
+                    if(error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;  
+                    }
+                   
+                    res.send(filteredEmploymentsArray.map((d) => {
+                        delete d._id;
+                        return d;
+                    }));
+                });   
+
+            } else {
                 res.send(provinceEmploymentsArray.map((d)=>{
                     delete d._id;
                     return d;
                 }));
-            });
-            
-        } else if (year) {
-            provinceEmployments.find({year:year}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-                
-                if (error)
-                    console.log("Error: " + error);
-                
-                res.send(provinceEmploymentsArray.map((d) => {
-                    delete d._id;
-                    return d;
-                }));
-            });
-            
-        } else if (province) {
-            provinceEmployments.find({province:province}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-                
-                if (error)
-                    console.log("Error: " + error);
-                
-                res.send(provinceEmploymentsArray.map((d) => {
-                    delete d._id;
-                    return d;
-                }));
-            });
-            
-        } else if (industryEmployment){
-            provinceEmployments.find({industryEmployment: industryEmployment}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-     
-                if (error)
-                    console.log("Error: " + error);
-                
-                res.send(provinceEmploymentsArray.map((d) => {
-                    delete d._id;
-                    return d;
-                }));
-            });
-            
-        } else if (buildingEmployment){
-            provinceEmployments.find({buildingEmployment:buildingEmployment}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-   
-                if (error)
-                    console.log("Error: " + error);
-                    
-                res.send(provinceEmploymentsArray.map((d) => {
-                    delete d._id;
-                    return d;
-                }));
-            });
-            
-        } else if (servicesEmployment){
-            provinceEmployments.find({servicesEmployment:servicesEmployment}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-
-                if (error)
-                    console.log("Error" + error);
-                    
-                res.send(provinceEmploymentsArray.map((d) => {
-                    delete d._id;
-                    return d;
-                }));
-            });
-            
-        } else {
-            provinceEmployments.find({}).skip(offset).limit(limit).toArray((error,provinceEmploymentsArray)=>{
-
-                if(error)
-                    console.log("Error" + error);
-
-                res.send(provinceEmploymentsArray.map((d)=>{
-                    delete d._id;
-                    return d;
-                }));
-            });
-        }
+            }
+        });
     });
+    
 
+    //GET a un conjunto de recursos por tipo (:province ó :year)
 
-    // GET /api/v1/province-employments/province -> Acceder a todos los recursos de una provincia [opcional: en un periodo de años]. Los resultados se muestran paginados.
-
-    path = BASE_PATH + "/province-employments/:province";
+    path = BASE_PATH + "/province-employments/:resource";
     
     app.get(path, (req, res) => {
+
+        var rec =  req.params.resource;
         
-        var province = req.params.province;
-        var fromYear = parseInt(req.query.from);
-        var toYear = parseInt(req.query.to);
-        var limit = parseInt(req.query.limit);
-        var offset = parseInt(req.query.offset);
+        console.log(rec);
+        
+        if (!Number.parseInt(rec)) {          // Si el tipo de recursos es province
+            provinceEmployments.find({province: rec})
+                .toArray((error, filteredEmploymentsArray) => {
+                    if (error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;
+                    }
 
-        if (!limit && !offset) {
-            limit = 10;     
-            offset = 0;
-        }
-
-        if (Number.isInteger(fromYear) && Number.isInteger(toYear)) {
-        // Si nos pasan en la URL un periodo de años: from=fromYear&to=toYear 
-            provinceEmployments.find({ "province": province, "year": { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-                
-                if (error) {
-                    console.log("Error: " + error);
-                    res.sendStatus(500);        // 500 Internal Server Error
-                    return;
-                }
-                if (provinceEmploymentsArray.length >= 1) {
-                    res.send(provinceEmploymentsArray.map((d) => {
-                        delete d._id;
-                        return d;
-                    }));
-                    
-                } else {
-                    res.sendStatus(404);        // 404 Not Found (recurso no encontrado)
-                }
-            });
+                    if (filteredEmploymentsArray.length > 0) {
+                        res.send(filteredEmploymentsArray.map((d) => {
+                            delete d._id;
+                            return d;
+                        }));
     
-        } else {
-            // No nos pasan un periodo de años. Devolvemos todos los recursos existentes para la provincia dada
-            provinceEmployments.find({ "province": province }).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
-
-                if (error) {
-                    console.log("Error: " + error);
-                    res.sendStatus(500);    // 500 Internal Server Error
-                    return;
-                }
-                
-                if (provinceEmploymentsArray.length >= 1) {
-                    res.send(provinceEmploymentsArray.map((d) => {
-                        delete d._id;
-                        return d;
-                    }));
-                    
-                } else {
-                    res.sendStatus(404);    // 404 Not Found (recurso no encontrado)
-                }
-            });
-        }
-    });
+                    } else {
+                        res.sendStatus(404);        // 404 Not Found (recursos no encontrados)
+                    }
+                });
+    
+        } else {                                    // Si el tipo de recursos es year
+            provinceEmployments.find({year: rec})
+                .toArray((error, filteredEmploymentsArray) => {
+                    if (error) {
+                        console.log("Error: " + error);
+                        res.sendStatus(500);        // 500 Internal Server Error
+                        return;
+                    }
+                    if (filteredEmploymentsArray.length > 0) {
+                        res.send(filteredEmploymentsArray.map((d) => {
+                            delete d._id;
+                            return d;
+                        }));
+    
+                    } else {
+                        res.sendStatus(404);        // 404 Not Found (recursos no encontrados)
+                    }
+                });
+            }
+        });
 
 
     // GET /api/v1/province-employments/province/year -> Acceder a un recurso concreto 
@@ -470,7 +497,7 @@ sólo coge 10 recursos y eso es lo que nos da.
     
     app.delete(path, (req, res) => {
         
-        provinceEmployments.remove();
+        provinceEmployments.deleteMany({});
         res.sendStatus(200);
 
     });
@@ -503,7 +530,7 @@ sólo coge 10 recursos y eso es lo que nos da.
 
             } else {
                 // Existe un recurso con esa identificación en BD: Lo eliminamos de la BD
-                provinceEmployments.remove({"province": province,"year": year});
+                provinceEmployments.deleteOne({"province": province,"year": year});
                 console.log("Deleted resource: " + province + " " + year);
                 res.sendStatus(200);        // 200 Ok
             }
