@@ -415,7 +415,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                     res.sendStatus(409);        // 409 Conflict
 
                 } else {
-                    provinceEmployments.insert(newProvinceEmployments);
+                    provinceEmployments.insertOne(newProvinceEmployments);
                     console.log("Created resource: "+ newProvinceEmployments["province"] + " " + newProvinceEmployments["year"]);
                     res.sendStatus(201);        // 201 Created
                 }
