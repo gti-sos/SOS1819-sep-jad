@@ -1,7 +1,28 @@
-<h1> Estadísticas de empleo</h1>
+<h1> Estadísticas de empleo por sectores</h1>
+<div>
+    <button
+        class="btn btn-primary btn-xs"
+        ng-click="loadProvinceEmployments()"
+        value="load"
+    >Datos iniciales</button>
+    <button
+        class="btn btn-danger" 
+        ng-click="deleteProvinceEmployments()"
+    >Borrar datos</button>
+    <label>
+        <h5>Desea los datos paginados?</h5>
+    </label>
+    <button
+        class="btn btn-info btn-xs"
+        ng-click="pagingEmployments()"
+    >SI</button>
+    <button
+        class="btn btn-info btn-xs"
+        ng-click="unpagingEmployments()"
+    >NO</button>
+</div>
 <table class="table">
     <thead>
-        <!-- para que salga la ñ y acentos <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>-->
         <tr>
             <th>Provincia</th>
             <th>Año</th>
@@ -11,7 +32,7 @@
             <th>Acciones</th> 
         </tr>
     </thead>
-   <tbody>
+    <tbody>
         <tr ng-repeat="provinceEmployment in provinceEmployments">
             <td><a href="#!/ui/v1/province-employments/edit/{{ provinceEmployment.province }}/{{ provinceEmployment.year }}">{{ provinceEmployment.province }}</a></td>
             <td>{{ provinceEmployment.year }}</td>
@@ -23,7 +44,7 @@
                     class="btn btn-danger"
                     ng-click="deleteProvinceEmployment(provinceEmployment.province,provinceEmployment.year)";
                     value="delete"
-                >Borrar</button>
+                >Eliminar</button>
             </td>
         </tr>
         <tr>
@@ -67,56 +88,63 @@
         </tr>
     </tbody>
 </table>
-<div class="container-fluid">
-    <div>
-        <div class="col-sm" style="background-color:lightblue;">
-            <label>
-                Busqueda por provincia: 
-                <input
-                    class="form-control text-center" size="50" ng-model="searchProvince"
-                />
-            </label>
-            <button
-                class="btn btn-primary btn-xs"
-                ng-click="searchByProvince()"
-            >Buscar</button>
-        </div>
-        <hr/>
-        <div class="col-sm" style="background-color:lightblue;">
-            <label for="">
-                Búsqueda por años. Desde:
-                <input
-                    class="text-center" name="" ng-model="fromYear"
-                />
-                <label for=""> 
-                    hasta:
-                </label>
-                <input 
-                    class="text-center" type="text" ng-model="toYear"
-                />
-                <button
-                    class="btn btn-primary btn-xs"
-                    ng-click="searchByYear()"
-                >Buscar</button>
-            </label>
-        </div>
-        <hr/>
-        <div class="alert alert-success">
-            <h2>Estado: {{status}}</h2>
-        </div>
-    </div>
-    <div>
-        <p align="center">
-            <button
-                class="btn btn-primary"
-                ng-click="getBack()"
-                value="back"
-            > ◄ </button>
-            <button
-                class="btn btn-primary" 
-                ng-click="getNext()"
-                value="next"
-            > ► </button>
-    </div>
-</div>
-
+<table class="table">
+    </tbody>
+        <tr>
+            <td>
+                <div class="col-sm" style="background-color:lightblue;">
+                    <label for="">
+                        Búsqueda por años. Desde:
+                    <input
+                        class="text-center" name="" ng-model="fromYear"
+                    />
+                    <label for=""> 
+                        hasta:
+                    </label>
+                    <input 
+                        class="text-center" type="text" ng-model="toYear"
+                    />
+                    <button
+                        class="btn btn-primary btn-xs"
+                        ng-click="searchByYear()"
+                    >Buscar</button>
+                    </label>
+                </div>
+            </td>
+            <td>
+                <div class="col-sm" style="background-color:lightblue;">
+                    <label>
+                        Búsqueda por provincia: 
+                        <input class="form-control text-center" size="30" ng-model="searchProvince"/>
+                    </label>
+                    <button
+                        class="btn btn-primary btn-xs"
+                        ng-click="searchByProvince()"
+                    >Buscar</button>
+                </div> 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="alert alert-success">
+                    <h4>Estado: {{status}}</h4>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p align="center">
+                        <button
+                            class="btn btn-secondary"
+                            ng-click="getBack()"
+                            value="back"
+                        >Página anterior</button>
+                        <button
+                            class="btn btn-secondary" 
+                            ng-click="getNext()"
+                            value="next"
+                        >Página siguiente</button>
+                </div> 
+            </td>
+        </tr>
+    </tbody>
+</table>

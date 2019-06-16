@@ -5,16 +5,28 @@ angular
     .controller("ListEmploymentsCtrl",["$scope","$http", function($scope,$http) {
         console.log("List controller initialized");
         var API = "/api/v1/province-employments";
-        var limit = 10;
+        var limit = 0;          // por defecto listamos todos los recursos sin paginar
         var offset = 0;
         
         refresh();
+        
+        $scope.pagingEmployments = function() {
+            limit = 6;
+            $scope.status = "Datos paginados de 6 en 6";
+            refresh();
+        };
+        
+         $scope.unpagingEmployments = function() {
+            limit = 0;
+            $scope.status = "Datos no paginados";
+            refresh();
+        };  
 
         function refresh() {
             console.log("Requesting employments to <"+API+">...");
+            
             $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {
                 console.log("Data received:" + JSON.stringify(response.data, null, 2));
-                
                 $scope.provinceEmployments = response.data;
             });
         }
@@ -22,8 +34,8 @@ angular
 
         $scope.getNext = function() {
             $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {
-            if ((response.data).length == 10) {
-                offset = offset + 10;
+            if ((response.data).length == limit) {
+                offset = offset + limit;
             }
             
             $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {  // por que lo repite??
@@ -36,8 +48,8 @@ angular
 
 
         $scope.getBack = function() {
-            if (offset >= 10) {
-                offset = offset - 10;
+            if (offset >= limit) {
+                offset = offset - limit;
             }
             
             $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {
@@ -50,7 +62,7 @@ angular
         
         $scope.loadProvinceEmployments = function() {
             $http.get(API+"/loadInitialData").then(function(response) {
-                $scope.status = "BD vacia. Datos iniciales cargados con exito";
+                $scope.status = "BD original vacia. Datos iniciales cargados con exito";
                 refresh();
                 }, function(error) {
                  $scope.status = "BD con datos. No realizada carga inicial de datos";

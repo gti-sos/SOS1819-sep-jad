@@ -13,8 +13,15 @@ angular
         var dataStudents = [];
         var filteredEmployments = [];
         var filteredStudents = [];
-        var dataChart = [];
-        var province = "sevilla";
+        var dataIndustry = [];
+        var dataBuilding = [];
+        var dataServices = [];
+        var dataESO = [];
+        var dataHigh = [];
+        var dataVocational = [];
+       
+       
+        var year = "2017";
         
         refresh();
     
@@ -28,34 +35,102 @@ angular
                     
                     $scope.students = responseStudents.data;
                    
-                    // Seleccionamos los recursos de la provincia dada
+                    // Seleccionamos los recursos para el año dado
                     
                     filteredEmployments = dataEmployments  
-                        .filter(function(d) {if(d.province == province) return d;});
-                    
+                        .filter(function(d) {if(d.year == year) return d;});
+                
                     filteredStudents = dataStudents
-                        .filter(function(d) {if(d.city == province) return d;});
+                        .filter(function(d) {if(d.year == parseInt(year)) return d;});
+                  
+                    filteredEmployments.forEach(function(d) {dataIndustry.push({"name":d.province, "value": d.industryEmployment})});
+                    filteredEmployments.forEach(function(d) {dataBuilding.push({"name":d.province, "value": d.buildingEmployment})});
+                    filteredEmployments.forEach(function(d) {dataServices.push({"name":d.province, "value": d.servicesEmployment})});
                     
-                    // Creamos un array con los datos a representar 
-                    
-                    filteredStudents.forEach(function(d) {
-                        filteredEmployments.forEach(function(e) {
-                            if(d.year == parseInt(e.year))
-                                dataChart.push({
-                                    "year": d.year,
-                                    "servicesEmployment": e.servicesEmployment,
-                                    "industryEmployment": e.industryEmployment,
-                                    "buildingEmployment": e.buildingEmployment,
-                                    "eso": d.eso,
-                                    "high": d.high,
-                                    "vocational": d.vocational
-                                });    
-                            });
-                        });
-                    
-                    console.log(dataChart);
+                    filteredStudents.forEach(function(d) {dataESO.push({"name":d.city, "value": d.eso})});
+                    filteredStudents.forEach(function(d) {dataHigh.push({"name":d.city, "value": d.high})});
+                    filteredStudents.forEach(function(d) {dataVocational.push({"name":d.city, "value": d.vocational})});
 
+                                        
                     Highcharts.chart('integration_SOS_05_container', {
+                        chart: {
+                            type: 'packedbubble',
+                            height: '100%'
+                        },
+                        title: {
+                            text: 'Comparative of employments and students in 2017'
+                        },
+                        tooltip: {
+                            useHTML: true,
+                            pointFormat: '<b>{point.name}:</b> {point.value}'
+                        },
+                        plotOptions: {
+                            packedbubble: {
+                                minSize: '20%',
+                                maxSize: '100%',
+                                zMin: 0,
+                                zMax: 1000,
+                                layoutAlgorithm: {
+                                    gravitationalConstant: 0.05,
+                                    splitSeries: true,
+                                    seriesInteraction: false,
+                                    dragBetweenSeries: true,
+                                    parentNodeLimit: true
+                                },
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}',
+                                    filter: {
+                                        property: 'y',
+                                        operator: '>',
+                                        value: 250
+                                    },
+                                    style: {
+                                        color: 'black',
+                                        textOutline: 'none',
+                                        fontWeight: 'normal'
+                                    }
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Industry Employments',
+                            data: dataIndustry
+                            }, {
+                            name: 'Building Employments',
+                            data: dataBuilding
+                            }, {
+                            name: 'Services Employments',
+                            data: dataBuilding
+                            }, {
+                            name: 'ESO Students',
+                            data: dataESO
+                            }, {
+                            name: 'High Students',
+                            data: dataHigh  
+                            }, {
+                            name: 'Vocational Students',
+                            data: dataVocational
+                            }]
+                    });
+                });
+            });
+        }
+    }]);   
+
+
+
+
+
+
+
+
+
+      
+                
+/*                  
+                    
+                   Highcharts.chart('integration_SOS_05_container', {
                         chart: {
                             type: 'column'
                         },
@@ -125,7 +200,6 @@ angular
                             data: dataChart.map(function(d) {return d.vocational})
                         }]
                     });
-                });
-            });
-        }
-    }]);
+
+
+*/
