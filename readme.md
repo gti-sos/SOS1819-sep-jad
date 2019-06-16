@@ -7,3 +7,8 @@
 - **URL**: http://sos1819-jun-jad.herokuapp.com/
 - **APIs**:
   - [https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/docs](https://sos1819-13.herokuapp.com/api/v1/province-employments/docs) (developed by [Juan Manuel Arteaga Delgado](https://github.com/juanma71))
+**Front-end**:  http://sos1819-jun-jad.herokuapp.com/#!/ui/v1/province-employments/
+- **Analytics**:  
+  - Highchart Visualization: http://sos1819-jun-jad.herokuapp.com/#!/analytics/highcharts  
+  - Geochart Visualization: http://sos1819-jun-jad.herokuapp.com/#!/analytics/geochart
+  - Awesome Visualization: http://sos1819-jun-jad.herokuapp.com/#!/analytics/chartist
