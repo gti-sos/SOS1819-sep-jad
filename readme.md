@@ -20,4 +20,4 @@
 - **About**:  
   - Video: http://sos1819-jun-jad.herokuapp.com/#!/about
 - **Docker**:
-  . Run:   docker run -p 8080:8080 -d arteagajuanma/sos1819-jun-jad
+    docker run -p 8080:8080 -d arteagajuanma/sos1819-jun-jad
