@@ -1,4 +1,4 @@
-# SOS1819-jun-jad
+# SOS1819-sep-jad
 
 - **Team**
   - [Juan Manuel Arteaga Delgado](https://github.com/juanma71)
