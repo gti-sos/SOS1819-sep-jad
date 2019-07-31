@@ -1,5 +1,5 @@
 {
-  "name": "sos1819-jun-jad",
+  "name": "sos1819-sep-jad",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,19 +11,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gti-sos/SOS1819-jun-jad.git"
+    "url": "git+https://github.com/gti-sos/SOS1819-sep-jad.git"
   },
   "author": "Juanma Arteaga Delgado",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gti-sos/SOS1819-jun-jad/issues"
+    "url": "https://github.com/gti-sos/SOS1819-sep-jad/issues"
   },
-  "homepage": "https://github.com/gti-sos/SOS1819-jun-jad#readme",
+  "homepage": "https://github.com/gti-sos/SOS1819-sep-jad#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mongodb": "^3.2.6",
+    "mongodb": "^3.2.7",
     "request": "^2.88.0"
   }
 }
