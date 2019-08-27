@@ -10,8 +10,8 @@ angular
 
             var API = "/api/v1/province-employments";
             var provinceEmployments = [];
-            var data = [];
-            var dataChart = [];
+            var dataFilteredYear = [];
+			var dataChart = [];
             var year = "2018";
             
             $http.get(API).then(function(response) {
@@ -22,61 +22,31 @@ angular
                     'packages': ['geochart'],
                     // Note: you will need to get a mapsApiKey for your project.
                     // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-                    mapsApiKey: 'AIzaSyCygDfdkLa2XxPmP2-rkSsW_eWPcYLGimc'
+                    mapsApiKey: 'AIzaSyCAx8dNAT7kroaGiuw0uuNZJrPRNWBKMCo'
                 });
-                google.charts.setOnLoadCallback(drawRegionsMap);
+                google.charts.setOnLoadCallback(drawMarkersMap);
                 
-                function codeComunity(prov) {
-                    var codeProv = ""
-                    var listCode = [{
-                            "province": "badajoz",
-                            "code": "ES-EX"
-                        },{
-                            "province": "barcelona",
-                            "code": "ES-CT"
-                        },{
-                            "province": "madrid",
-                            "code": "ES-MD"
-                        },{
-                            "province": "sevilla",
-                            "code": "ES-AN" 
-                        },{
-                            "province": "valencia",
-                            "code": "ES-VC"
-                        },{
-                            "province": "vizcaya",
-                            "code": "ES-PV"
-                        }]; 
+                function drawMarkersMap() {
                     
-                    listCode.forEach(function(d) {
-                        if (d.province == prov)
-                            codeProv = d.code;
-                        });
-                    
-                    return codeProv;
-                }
-
-                function drawRegionsMap() {
-                    
-                    dataChart = provinceEmployments
+                    dataFilteredYear = provinceEmployments
                         .filter(function(d) {if(d.year == year) return d;}); 
 
-                    data.push(['comunidad', 'provincia', 'Industry', 'Building']);
+                    dataChart.push(['Province', 'Industry']);
                     
-                    dataChart.forEach(function (d) {
-                        data.push([codeComunity(d.province), d.province, d.industryEmployment, d.buildingEmployment]);
+                    dataFilteredYear.forEach(function (d) {
+                        dataChart.push([d.province, d.industryEmployment]);
                     });
                     
-                    var plot = google.visualization.arrayToDataTable(data);
+                    var dataPlot = google.visualization.arrayToDataTable(dataChart);
                     
                     var options = {
                         region:'ES',
-                        resolution: 'provinces'
+                        displayMode: 'markers'
                     };
 
-                    var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+                    var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
 
-                    chart.draw(plot, options);
+                    chart.draw(dataPlot, options);
                 }
             });
         }
