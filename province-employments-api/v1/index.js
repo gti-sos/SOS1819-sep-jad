@@ -2,7 +2,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
    
     var path = "";
   
-    // GET /api/v1/province-employments/docs -> Acceso a coleccion llamadas Postman sobre API
+	// GET /api/v1/province-employments/docs -> Acceso a coleccion llamadas Postman sobre API
     
     path = BASE_PATH + "/province-employments/docs";
     
@@ -299,7 +299,7 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     });
     
 
-    //GET a un conjunto de recursos por tipo (:province ó :year)
+    // GET a un conjunto de recursos (coleccion) por tipo (:province ó :year)
 
     path = BASE_PATH + "/province-employments/:resource";
     
@@ -457,8 +457,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
         var toUpdateProvinceEmployments = req.body;
 
         if (Object.keys(toUpdateProvinceEmployments).length != 5 || !toUpdateProvinceEmployments.province || !toUpdateProvinceEmployments.year || !toUpdateProvinceEmployments.industryEmployment || !toUpdateProvinceEmployments.buildingEmployment || !toUpdateProvinceEmployments.servicesEmployment) {
-        // si el recurso pasado no tiene el formato correcto: tiene campos de más o falta algún campo de los exigidos 
-            res.sendStatus(400);        // 400 Bad Request
+
+// si el recurso pasado no tiene el formato correcto: faltan o sobran campos, no existe algún campo de los exigidos o el campo esta vacio 
+            
+			res.sendStatus(400);        // 400 Bad Request
 
         } else {
             provinceEmployments.find({

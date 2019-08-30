@@ -18,12 +18,12 @@ angular
 
             });
 
-            $scope.upupdateProvinceEmployment = function(province,year) {
+            $scope.updateProvinceEmployment = function(province,year) {
                 console.log("Updating province employment: "+ JSON.stringify($scope.provinceEmployment));
 
                 Object.keys($scope.provinceEmployment).forEach(d => {
                     if ($scope.provinceEmployment[d] == "") {
-                        $scope.status = "Error: Faltan parámetros al dato"
+                        $scope.status = "Recurso no actualizado. Falta parametros"
                         update = false;
                     }
                 })

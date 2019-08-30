@@ -11,8 +11,8 @@ angular
         refresh();
         
         $scope.pagingEmployments = function() {
-            limit = 6;
-            $scope.status = "Datos paginados de 6 en 6";
+            limit = 10;
+            $scope.status = "Datos paginados de "+limit+" en "+limit;
             refresh();
         };
         
@@ -23,27 +23,31 @@ angular
         };  
 
         function refresh() {
-            console.log("Requesting employments to <"+API+">...");
-            
-            $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {
-                console.log("Data received:" + JSON.stringify(response.data, null, 2));
-                $scope.provinceEmployments = response.data;
-            });
+            console.log("Requesting employments to <"+API+">...");       
+            $http
+				.get(API+"?limit="+limit+"&offset="+offset)
+				.then(function(response) {
+                	console.log("Data received:" + JSON.stringify(response.data, null, 2));
+                	$scope.provinceEmployments = response.data;
+            	});
         }
 
 
         $scope.getNext = function() {
-            $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {
-            if ((response.data).length == limit) {
-                offset = offset + limit;
-            }
-            
-            $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {  // por que lo repite??
-                $scope.provinceEmployments = response.data;
-            });
-            }, function Error(response) {
-                $scope.provinceEmployments = [];
-            });
+            $http
+				.get(API+"?limit="+limit+"&offset="+offset)
+				.then(function(response) {
+            		if ((response.data).length == limit) {
+                		offset = offset + limit;
+            		}
+					$http
+						.get(API+"?limit="+limit+"&offset="+offset)
+						.then(function(response) {  // por que lo repite??
+							$scope.provinceEmployments = response.data;
+						});
+				}, function Error(response) {
+						$scope.provinceEmployments = [];
+					});
         };
 
 
@@ -52,22 +56,26 @@ angular
                 offset = offset - limit;
             }
             
-            $http.get(API+"?limit="+limit+"&offset="+offset).then(function(response) {
-                $scope.provinceEmployments = response.data;
+            $http
+				.get(API+"?limit="+limit+"&offset="+offset)
+				.then(function(response) {
+                	$scope.provinceEmployments = response.data;
                 }, function Error(response) {
-                    $scope.provinceEmployments = [];
-                });
+                    	$scope.provinceEmployments = [];
+                	});
         };
    
         
         $scope.loadProvinceEmployments = function() {
-            $http.get(API+"/loadInitialData").then(function(response) {
-                $scope.status = "BD original vacia. Datos iniciales cargados con exito";
-                refresh();
+            $http
+				.get(API+"/loadInitialData")
+				.then(function(response) {
+                	$scope.status = "BD original vacia. Datos iniciales cargados con exito";
+                	refresh();
                 }, function(error) {
-                 $scope.status = "BD con datos. No realizada carga inicial de datos";
-                    refresh();
-                });
+                 		$scope.status = "BD con datos. No realizada carga inicial de datos";
+                    	refresh();
+                	});
         };
 
 
@@ -81,14 +89,14 @@ angular
                     $scope.status = "El recurso "+newProvinceEmployment.province+"-"+newProvinceEmployment.year+" se ha añadido con exito";
                     refresh();
                 }, function(error) {
-                    if (error.status == 409) {
-                        $scope.status = "Ya existe el recurso "+newProvinceEmployment.province+"-"+newProvinceEmployment.year;
-                        refresh();
-                    } else {
-                        $scope.status = "Alguno de los campos no ha sido rellenado correctamente";
-                        refresh();
-                    }
-                });
+						if (error.status == 409) {
+							$scope.status = "Ya existe el recurso "+newProvinceEmployment.province+"-"+newProvinceEmployment.year;
+							refresh();
+						} else {
+							$scope.status = "Alguno de los campos no ha sido rellenado correctamente";
+							refresh();
+						}
+                	});
         };
 
 
@@ -117,23 +125,63 @@ angular
 
 
         $scope.searchByProvince = function() {
-            $http.get(API+"/"+$scope.searchProvince).then(function(response) {
-                console.log("SEARCH response: " + response.status + " " + response.data);
-                
-                $scope.provinceEmployments = response.data;
+            $http
+				.get(API+"/"+$scope.province)
+				.then(function(response) {
+                	console.log("SEARCH response: " + response.status + " " + response.data);
+                	$scope.provinceEmployments = response.data;
                 }, function(error) {
-                    $scope.status = "No existe el recurso " + $scope.searchProvince;
-                });
+                		$scope.status = "No existe el recurso " + $scope.province;
+                	});
         };
 
-        $scope.searchByYear = function() {
-            $http.get(API+"?from="+$scope.fromYear+"&to="+$scope.toYear).then(function(response) {
-                console.log("SEARCH response: " + response.status + " " + response.data)
-                
-                $scope.provinceEmployments = response.data;
-            });
-        };
 
-        $scope.limit = limit;
+        $scope.searchByOther = function() {
+			if($scope.other=="year"){
+				$http
+					.get(API+"?from="+$scope.from+"&to="+$scope.to)
+					.then(function(response) {
+                		console.log("SEARCH response: " + response.status + " " + response.data)
+                		$scope.provinceEmployments = response.data;
+					}, function(error) {
+                    		$scope.status = "No existen recursos desde: " + $scope.from + " hasta " + $scope.to;
+                		});
+			} else {
+				fromOther = "";
+				toOther = "";
+				switch ($scope.other) {
+  					case "industryEmployment":
+						fromOther = "fromIndustry";
+						toOther = "toIndustry";
+						break;
+					
+					case "buildingEmployment":
+						fromOther = "fromBuilding";
+						toOther = "toBuilding";
+						break;
+						
+					case "servicesEmployment":
+						fromOther = "fromServices";
+						toOther = "toServices";
+						break;
+					
+					default:
+						return;
+				}
+				
+				$http
+					.get(API+"?"+fromOther+"="+$scope.from+"&"+toOther+"="+$scope.to)
+					.then(function(response) {
+                		console.log("SEARCH response: " + response.status + " " + response.data)
+                		$scope.provinceEmployments = response.data;
+					}, function(error) {
+                    		$scope.status = "No existen recursos desde: " + $scope.from + " hasta " + $scope.to;
+                		});	
+			}
+
+        };		
+		
+
+		$scope.limit = limit;
         $scope.offset = offset;
     }]);
