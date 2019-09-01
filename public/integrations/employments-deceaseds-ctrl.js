@@ -61,7 +61,7 @@ angular
                     
                     Highcharts.chart('integration_SOS_14_container', {
                         title: {
-                            text: 'Comparative (by provinces) between employments and deaths due to traffic accidents (year: 2018)'
+                            text: 'Comparative (by provinces) between employments (in thousands) and deaths due to traffic accidents (year: 2018)'
                         },
                         xAxis: {
                             categories: dataChart.map(function(d) {return d.province})
@@ -82,15 +82,15 @@ angular
                         series: [{
                             type: 'column',
                             name: 'Industry',
-                            data: dataChart.map(function(d) {return d.industryEmployment})
+                            data: dataChart.map(function(d) {return (d.industryEmployment)/1000})
                         }, {
                             type: 'column',
                             name: 'Building',
-                            data: dataChart.map(function(d) {return d.buildingEmployment})
+                            data: dataChart.map(function(d) {return (d.buildingEmployment)/1000})
                         }, {
                             type: 'column',
                             name: 'Services',
-                            data: dataChart.map(function(d) {return d.servicesEmployment})
+                            data: dataChart.map(function(d) {return (d.servicesEmployment)/1000})
                         }, {
                             type: 'spline',
                             name: 'deceaseds',
