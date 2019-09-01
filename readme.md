@@ -16,7 +16,7 @@
   - Currency quote-external use with widget (CORS) to API AwesomeAPI Exchange: http://sos1819-sep-jad.herokuapp.com/#!/integrations/coins
   - Employments vs City Weather-external integration with proxy to API Weather: http://sos1819-sep-jad.herokuapp.com/#!/integrations/weather
   - Employments vs Students-internal integration (CORS) to API Andalusian students (grupo SOS05): http://sos1819-sep-jad.herokuapp.com/#!/integrations/employments-students
-  - Employments vs Deceased-internal integration (CORS) to API deceaseds (grupo SOS14): http://sos1819-sep-jad.herokuapp.com/#!/integrations/employments-deceaseds
+  - Employments vs Deceased-internal integration (CORS) to API Deceaseds (grupo SOS14): http://sos1819-sep-jad.herokuapp.com/#!/integrations/employments-deceaseds
  
 - **About**:  http://sos1819-sep-jad.herokuapp.com/#!/about
   - Video: https://youtu.be/BuXPAdMMAK8
