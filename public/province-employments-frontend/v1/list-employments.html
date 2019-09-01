@@ -105,37 +105,62 @@
     </tbody>
 </table>
 
-<label>
-    <h4>Busqueda de empleos por:</h4>
-</label>
+<table class="table">
+	<thead>
+		<label>
+    		<h5>Consulta de empleos por provincia o año:</h5>
+		</label>
+		<tr>
+			<th>Provincia / Año</th>
+		</tr>
+		<tr>
+			<td WIDTH="200" HEIGHT="50" align="center">
+				<select style="width: 100%" class="form-control" ng-model="provinceYear">
+					<option value="" disabled selected>Campo Busqueda</option>
+					<option value="province">Provincia</option>
+					<option value="year">Año</option>					
+				</select>	
+			</td>
+			<td WIDTH="300" HEIGHT="50" align="center">
+				<input 
+					class="form-control"
+					name=""
+					ng-model="data"
+				/>			
+			</td>
+			<td>
+				<button
+                    class="btn btn-primary btn-xs"
+                    ng-click="searchByProvinceOrYear()"
+                >Buscar</button>
+			</td>
+		</tr>
+
+
 
 <table class="table">
 	<thead>
-    	<tr>
+		<label>
+    		<h5>Consulta de empleos personalizada:</h5>
+		</label>
+		<tr>
             <th>Provincia</th>
-            <th></th>
             <th>Otro campo</th>
             <th>Desde:</th>
             <th>Hasta:</th>
             <th></th> 
         </tr>		
 	</thead>
-	<tbody>
+	<tbody>		
 		<tr>
-			<td>
+			<td WIDTH="300" HEIGHT="50">
 				<input 
 					class="form-control"
 					name=""
 					ng-model="province"
 				/>
 			</td>
-			<td>
-				<button
-                    class="btn btn-primary btn-xs"
-                    ng-click="searchByProvince()"
-                >Buscar</button>
-			</td>
-			<td>
+			<td WIDTH="200" HEIGHT="50">
 				<select style="width: 100%" class="form-control" ng-model="other">
 					<option value="" disabled selected>Campo Busqueda</option>
 					<option value="year">Año</option>
@@ -144,14 +169,14 @@
 					<option value="servicesEmployment">Servicios</option>
 				</select>	
 			</td>
-			<td>
+			<td WIDTH="200" HEIGHT="50">
 				<input 
 					class="form-control"
 					name="" 
 					ng-model="from"
 				/>
 			</td>
-            <td>
+            <td WIDTH="200" HEIGHT="50">
 				<input 
 					class="form-control"
 					name=""

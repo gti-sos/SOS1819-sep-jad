@@ -157,34 +157,58 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
     
     app.get(path, (req,res)=>{
         
-        var limit = parseInt(req.query.limit);
-        var offset = parseInt(req.query.offset);
-        
-        if (!limit && !offset) {
-            limit = 0;     
-            offset = 0;
-        }
-        
+        var paramsFormat = true;
+		var limit = parseInt(req.query.limit);
+        var offset = parseInt(req.query.offset);       
         var province = req.query.province;
+		var initialYear = 2000;
+		var year = req.query.year;
         var fromYear = req.query.from;
         var toYear = req.query.to;
-        var year = req.query.year;
         var fromIndustryEmployment = parseInt(req.query.fromIndustry);
         var toIndustryEmployment = parseInt(req.query.toIndustry);
         var fromBuildingEmployment = parseInt(req.query.fromBuilding);
         var toBuildingEmployment = parseInt(req.query.toBuilding);
         var fromServicesEmployment = parseInt(req.query.fromServices);
         var toServicesEmployment = parseInt(req.query.toServices);
-
-        provinceEmployments.find({}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
+			
+// Comprobacion parametros recibidos y formato
+		       
+		if (!limit && !offset) {
+            limit = 0;     
+            offset = 0;
+        }
+			
+		if (year){
+			if (!isNaN(parseInt(year)) || (parseInt (year) < initialYear)) paramsFormat = false;
+		}
+		
+		if	(fromYear || toYear) {			
+			if (isNaN(parseInt(fromYear)) || isNaN(parseInt(toYear)) || (parseInt(fromYear) < initialYear) || (parseInt(toYear) < initialYear) || (parseInt(fromYear) > parseInt(toYear)) || !(fromYear && toYear)) paramsFormat = false;			
+		}
+			
+		if	(fromIndustryEmployment || toIndustryEmployment) {
+			if (isNaN(fromIndustryEmployment) || isNaN(toIndustryEmployment) || (fromIndustryEmployment > toIndustryEmployment) || !(fromIndustryEmployment && toIndustryEmployment)) paramsFormat = false;
+		}
+		
+		if	(fromBuildingEmployment || toBuildingEmployment) {
+			if (isNaN(fromBuildingEmployment) || isNaN(toBuildingEmployment) || (fromBuildingEmployment > toBuildingEmployment) || !(fromBuildingEmployment && toBuildingEmployment)) paramsFormat = false;
+		}
+			
+		if	(fromServicesEmployment || toServicesEmployment) {
+			if (isNaN(fromServicesEmployment) || isNaN(toServicesEmployment) || (fromServicesEmployment > toServicesEmployment) || !(fromServicesEmployment && toServicesEmployment)) paramsFormat = false;
+		}
+				
+		provinceEmployments.find({}).skip(offset).limit(limit).toArray((error, provinceEmploymentsArray) => {
             if (error) {
                 console.log("Error: " + error);
                 res.sendStatus(500);        // 500 Internal Server Error
                 return;  
             }
 
-            if  (province && fromYear && toYear) {
-                provinceEmployments.find({ province: province, year: { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+            if  (province && fromYear &&  toYear && paramsFormat) {
+                console.log("Search resources by province and year: " + province + " from " + fromYear + " to " + toYear);
+				provinceEmployments.find({ province: province, year: { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
 
                     if(error) {
                         console.log("Error: " + error);
@@ -199,8 +223,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                 });      
             
             
-            } else if (fromYear && toYear) {
-                provinceEmployments.find({ year: { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+            } else if (fromYear &&  toYear && paramsFormat) {
+                console.log("Search resources by year from " + fromYear + " to " + toYear);
+				provinceEmployments.find({ year: { $gte: fromYear, $lte: toYear } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
 
                     if(error) {
                         console.log("Error: " + error);
@@ -215,7 +240,8 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                 });
                 
             } else if (year) {
-                provinceEmployments.find({ year:year }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+                console.log("Search resources by year: " + year);
+				provinceEmployments.find({ year:year }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
                     
                     if(error) {
                         console.log("Error: " + error);
@@ -229,8 +255,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                     }));
                 });
                 
-            } else if (province) {
-                provinceEmployments.find({province:province}).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+            } else if (province && paramsFormat) {
+                console.log("Search resources by province: " + province);
+				provinceEmployments.find({province:province}).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
 
                     if(error) {
                         console.log("Error: " + error);
@@ -244,8 +271,12 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                     }));
                 });
                 
-            } else if (fromIndustryEmployment && toIndustryEmployment){
-                provinceEmployments.find({industryEmployment: { $gte: fromIndustryEmployment, $lte: toIndustryEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+            } else if ((fromIndustryEmployment >= 0) && toIndustryEmployment){
+				
+	// necesario >= 0 porque si ponemos solo fromIndustryEmployment, si vale 0, evalua el if a false
+				
+                console.log("Search industry employments resources from " + fromIndustryEmployment + " to " + toIndustryEmployment);
+				provinceEmployments.find({industryEmployment: { $gte: fromIndustryEmployment, $lte: toIndustryEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
 
                     if(error) {
                         console.log("Error: " + error);
@@ -259,8 +290,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                     }));
                 });
 
-            } else if (fromBuildingEmployment && toBuildingEmployment){
-                provinceEmployments.find({buildingEmployment: { $gte: fromBuildingEmployment, $lte: toBuildingEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+            } else if ((fromBuildingEmployment >= 0) && toBuildingEmployment && paramsFormat){
+                console.log("Search building employments resources from " + fromBuildingEmployment + " to " + toBuildingEmployment);
+				provinceEmployments.find({buildingEmployment: { $gte: fromBuildingEmployment, $lte: toBuildingEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
 
                     if(error) {
                         console.log("Error: " + error);
@@ -274,8 +306,9 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                     }));
                 });
                 
-            } else if (fromServicesEmployment && toServicesEmployment){
-                provinceEmployments.find({servicesEmployment: { $gte: fromServicesEmployment, $lte: toServicesEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
+            } else if ((fromServicesEmployment >= 0) && toServicesEmployment && paramsFormat){
+                console.log("Search services employments resources from " + fromServicesEmployment + " to " + toServicesEmployment);
+				provinceEmployments.find({servicesEmployment: { $gte: fromServicesEmployment, $lte: toServicesEmployment } }).skip(offset).limit(limit).toArray((error, filteredEmploymentsArray) => {
 
                     if(error) {
                         console.log("Error: " + error);
@@ -289,12 +322,19 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
                     }));
                 });   
 
-            } else {
-                res.send(provinceEmploymentsArray.map((d)=>{
+            } else if (!paramsFormat) {
+				console.log("Search not possible. Missing or incorrect search parameters");
+				res.sendStatus(400);		// 400 Bad Request
+				return;
+			
+			} else {							
+				console.log("Search all resources");
+				res.send(provinceEmploymentsArray.map((d)=>{
                     delete d._id;
                     return d;
                 }));
             }
+			paramsFormat = true;
         });
     });
     

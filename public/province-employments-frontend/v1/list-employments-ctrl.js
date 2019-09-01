@@ -22,7 +22,7 @@ angular
             refresh();
         };  
 
-        function refresh() {
+        function refresh() {			// Funcion para reinicializar frontend (muestra los datos iniciales)
             console.log("Requesting employments to <"+API+">...");       
             $http
 				.get(API+"?limit="+limit+"&offset="+offset)
@@ -30,7 +30,7 @@ angular
                 	console.log("Data received:" + JSON.stringify(response.data, null, 2));
                 	$scope.provinceEmployments = response.data;
             	});
-        }
+        };
 
 
         $scope.getNext = function() {
@@ -124,64 +124,105 @@ angular
         };
 
 
-        $scope.searchByProvince = function() {
-            $http
-				.get(API+"/"+$scope.province)
-				.then(function(response) {
-                	console.log("SEARCH response: " + response.status + " " + response.data);
-                	$scope.provinceEmployments = response.data;
-                }, function(error) {
-                		$scope.status = "No existe el recurso " + $scope.province;
-                	});
+        $scope.searchByProvinceOrYear = function() {
+            if($scope.provinceYear=="year"){	
+				$http
+					.get(API+"/"+$scope.data)
+					.then(function(response) {
+						console.log("SEARCH response: " + response.status + " " + response.data);
+						$scope.provinceEmployments = response.data;					
+					}, function(error) {
+							$scope.status = "No existe el recurso " + $scope.data;
+							refresh();
+						});
+				
+			}
+			else if($scope.provinceYear=="province"){
+				$http
+					.get(API+"/"+$scope.data)
+					.then(function(response) {
+						console.log("SEARCH response: " + response.status + " " + response.data);
+						$scope.provinceEmployments = response.data;
+					}, function(error) {
+							$scope.status = "No existe el recurso " + $scope.data;
+							refresh();
+						});
+			}
+			$scope.provinceYear="";
+			$scope.data="";
         };
 
 
         $scope.searchByOther = function() {
-			if($scope.other=="year"){
-				$http
-					.get(API+"?from="+$scope.from+"&to="+$scope.to)
-					.then(function(response) {
-                		console.log("SEARCH response: " + response.status + " " + response.data)
-                		$scope.provinceEmployments = response.data;
-					}, function(error) {
-                    		$scope.status = "No existen recursos desde: " + $scope.from + " hasta " + $scope.to;
-                		});
-			} else {
-				fromOther = "";
-				toOther = "";
-				switch ($scope.other) {
-  					case "industryEmployment":
-						fromOther = "fromIndustry";
-						toOther = "toIndustry";
-						break;
-					
-					case "buildingEmployment":
-						fromOther = "fromBuilding";
-						toOther = "toBuilding";
-						break;
-						
-					case "servicesEmployment":
-						fromOther = "fromServices";
-						toOther = "toServices";
-						break;
-					
-					default:
-						return;
-				}
+			URL = API;
+			fromOther = "";
+			toOther = "";
+			$scope.status = "";
+			
+			if($scope.province == "")
+			{
+				if($scope.other == "year"){
+					if(($scope.from == "") && ($scope.to == ""))   
+						URL = URL+"?"+$scope.year;
+					else
+						URL = URL+"?"+"from="+$scope.from+"&to="+$scope.to;
+			
+				}else{
+					switch ($scope.other) {
+						case "industryEmployment":
+							fromOther = "fromIndustry";
+							toOther = "toIndustry";
+							break;
+
+						case "buildingEmployment":
+							fromOther = "fromBuilding";
+							toOther = "toBuilding";
+							break;
+
+						case "servicesEmployment":
+							fromOther = "fromServices";
+							toOther = "toServices";
+							break;
+
+						default:
+							return;
+					}
+					URL = URL+"?"+fromOther+"="+$scope.from+"&"+toOther+"="+$scope.to;	
+				}		
 				
+			} else {
+				if(($scope.other == "") && ($scope.from == "") && ($scope.to == ""))
+					URL = URL+"?province="+$scope.province;
+				
+				else if(($scope.other == "year") && ($scope.from != "") && ($scope.to != ""))
+					URL = URL+"?province="+$scope.province+"&from="+$scope.from+"&to="+$scope.to;
+				else
+					URL = "error";			
+			}		
+					
+			if (URL != "error") {
 				$http
-					.get(API+"?"+fromOther+"="+$scope.from+"&"+toOther+"="+$scope.to)
+					.get(URL)
 					.then(function(response) {
                 		console.log("SEARCH response: " + response.status + " " + response.data)
                 		$scope.provinceEmployments = response.data;
+						if (response.data.length == 0) $scope.status = "No hay resultados";
 					}, function(error) {
-                    		$scope.status = "No existen recursos desde: " + $scope.from + " hasta " + $scope.to;
-                		});	
+                    		$scope.status = "Se ha producido un error";
+							refresh();
+                		});
+			
+			} else {
+				$scope.status = "Busqueda erronea";
+				refresh();
 			}
-
-        };		
 		
-
-		$scope.limit = limit;
-        $scope.offset = offset;
-    }]);
+			// $scope.limit = limit;
+			// $scope.offset = offset;
+			$scope.province = "";
+			$scope.other = "";
+			$scope.from = "";
+			$scope.to = "";
+    	};
+    }
+]);	

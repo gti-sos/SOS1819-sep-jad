@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "f5975da4-b179-4abe-8cd5-5a378775a06d",
-		"name": "SOS1819-jun-jad-D01-province-employments",
+		"name": "SOS1819-sep-jad-D01-province-employments",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -26,10 +26,47 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"province-employments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEL al conjunto de recursos - BD vacia Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8fa8bd84-0bf3-4652-b975-80f0a8667e1b",
+						"exec": [
+							"pm.test(\"Status code is 200 Ok\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
+					"protocol": "https",
+					"host": [
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -67,10 +104,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -111,10 +148,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/loadInitialData",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/loadInitialData",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -159,10 +196,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -200,10 +237,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?limit=10&offset=0",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?limit=10&offset=0",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -251,10 +288,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?limit=10&offset=10",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?limit=10&offset=10",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -303,10 +340,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -321,7 +358,7 @@
 			"response": []
 		},
 		{
-			"name": "GET al conjunto de recursos de un año (2018)",
+			"name": "GET al conjunto de recursos de un aÃ±o (2018)",
 			"event": [
 				{
 					"listen": "test",
@@ -346,10 +383,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -395,10 +432,10 @@
 					"raw": "{\n        \"province\": \"cordoba\",\n        \"year\": \"2018\",\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -512,13 +549,13 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"province\": \"cordoba\",\n        \"año\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
+					"raw": "{\n        \"province\": \"cordoba\",\n        \"aÃ±o\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -633,10 +670,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -683,10 +720,10 @@
 					"raw": "{\n        \"province\": \"cordoba\",\n        \"year\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -809,10 +846,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -858,10 +895,10 @@
 					"raw": "{\n        \"province\": \"cordoba\",\n        \"year\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -905,10 +942,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -943,10 +980,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -981,10 +1018,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/cordoba/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1033,10 +1070,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1084,10 +1121,10 @@
 					"raw": "{\n        \"province\": \"sevilla\",\n        \"year\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1135,10 +1172,10 @@
 					"raw": "{\n        \"provincia\": \"sevilla\",\n        \"year\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1186,10 +1223,10 @@
 					"raw": "{\n        \"province\": \"sevilla\",\n        \"year\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1243,10 +1280,10 @@
 					}
 				],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1294,10 +1331,10 @@
 					"raw": "{\n        \"province\": \"huelva\",\n        \"year\": \"2018\",\n        \"industryEmployment\": 44000,\n        \"buildingEmployment\": 35000,\n        \"servicesEmployment\": 373400\n    }"
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/huelva/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/huelva/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1345,10 +1382,10 @@
 					"raw": "{\n    \t\"province\": \"sevilla\",\n\t\t\"year\": \"2018\",\n    \t\"industryEmployment\": 79950,\n    \t\"buildingEmployment\": 49325,\n\t\t\"servicesEmployment\": 639775 \n    }\n    "
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/sevilla/2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1394,10 +1431,10 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1441,10 +1478,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?province=madrid",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?province=madrid",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1464,7 +1501,7 @@
 			"response": []
 		},
 		{
-			"name": "Busqueda de recursos por año (2017)",
+			"name": "Busqueda de recursos por aÃ±o (2017)",
 			"event": [
 				{
 					"listen": "test",
@@ -1494,10 +1531,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?year=2017",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?year=2017",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1547,10 +1584,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?fromIndustry=80000&toIndustry=100000",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?fromIndustry=80000&toIndustry=100000",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1604,10 +1641,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?fromBuilding=100000&toBuilding=200000",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?fromBuilding=100000&toBuilding=200000",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1661,10 +1698,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?fromServices=500000&toServices=1000000",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?fromServices=500000&toServices=1000000",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1688,7 +1725,7 @@
 			"response": []
 		},
 		{
-			"name": "Busqueda de recursos por rango de años",
+			"name": "Busqueda de recursos por rango de aÃ±os",
 			"event": [
 				{
 					"listen": "test",
@@ -1718,10 +1755,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?from=2017&to=2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?from=2017&to=2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1745,7 +1782,7 @@
 			"response": []
 		},
 		{
-			"name": "Busqueda de recursos por provincia (barcelona) y rango de años",
+			"name": "Busqueda de recursos por provincia (barcelona) y rango de aÃ±os",
 			"event": [
 				{
 					"listen": "test",
@@ -1775,10 +1812,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments?province=barcelona&from=2017&to=2018",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments?province=barcelona&from=2017&to=2018",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
@@ -1836,10 +1873,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://sos1819-jun-jad.herokuapp.com/api/v1/province-employments",
+					"raw": "https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments",
 					"protocol": "https",
 					"host": [
-						"sos1819-jun-jad",
+						"sos1819-sep-jad",
 						"herokuapp",
 						"com"
 					],
