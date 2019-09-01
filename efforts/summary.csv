@@ -1,15 +1,8 @@
 ﻿Project,Client,Title,Duration
-SOS1819-jun-jad,,#1 Crear nuevo workspace GitHub y configurar herramientas,00:24:12
-SOS1819-jun-jad,,#10 Realizar conjunto de visualizaciones de los recursos de la API,44:59:57
-SOS1819-jun-jad,,#11 Realizar integraciones con otros grupos SOS y APIS externas,44:14:40
-SOS1819-jun-jad,,#12 Comprobar todos los requisitos y generar recurso ultimos,03:41:44
-SOS1819-jun-jad,,#12 Comprobar todos los requisitos y generar recursos ultimos,12:46:52
-SOS1819-jun-jad,,#2 Clonar workspace GitHub en C9 y preparar entorno,00:28:22
-SOS1819-jun-jad,,#3 Instalar bibliotecas necesarias,00:06:52
-SOS1819-jun-jad,,#4 Hacer modificaciones en código backend y pruebas locales con Postman,25:28:00
-SOS1819-jun-jad,,#5 Completar pruebas Postman y aplicar test Newman,00:01:15
-SOS1819-jun-jad,,"#5 Completar pruebas Postman, desplegar en Heroku, y aplicar test Newman",02:38:40
-SOS1819-jun-jad,,#6 Instalar bibliotecas necesarias para desarrollar el frontend,00:26:49
-SOS1819-jun-jad,,#7 Desarrollar archivo index.html y archivo principal employments-app.js (con rutas a vistas y controladores asociados),11:15:32
-SOS1819-jun-jad,,#8 Desarrollar vistas y controladores,20:19:20
-SOS1819-jun-jad,,#9 Realizar tests para el frontend y combinar con los del backend,10:57:38
+SOS1819-sep-jad,,#1 Modificar visualizacion Geochart,06:00:09
+SOS1819-sep-jad,,#2 Cambiar de entorno Cloud 9 a goormIDE,08:45:48
+SOS1819-sep-jad,,#3 Solucionar fallos en frontend,49:48:19
+SOS1819-sep-jad,,#4 Modificar visualización awesome-charting,02:25:42
+SOS1819-sep-jad,,#5 Modificar integraciones externas,21:44:11
+SOS1819-sep-jad,,#6 Pruebas y posibles modificaciones tests backend y frontend,33:06:07
+SOS1819-sep-jad,,#7 Completar mejoras pendientes,25:05:09
