@@ -5,9 +5,8 @@
 - **Project description**:  My information source are made for analyzing the employment by sectors and provinces in Spain.
 - **Repository**: [gti-sos/SOS1819-sep-jad](https://github.com/gti-sos/SOS1819-sep-jad.git)
 - **URL**: http://sos1819-sep-jad.herokuapp.com/
-- **APIs**:
-  - [https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/docs](https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/docs) (developed by [Juan Manuel Arteaga Delgado](https://github.com/juanma71))
-- **Front-end**:  http://sos1819-sep-jad.herokuapp.com/#!/ui/v1/province-employments/
+- **APIs**: https://sos1819-sep-jad.herokuapp.com/api/v1/province-employments/docs
+- **Frontend**:  http://sos1819-sep-jad.herokuapp.com/#!/ui/v1/province-employments/
 - **Analytics**:
   - Highchart Visualization: http://sos1819-sep-jad.herokuapp.com/#!/analytics/highcharts
   - Geochart Visualization: http://sos1819-sep-jad.herokuapp.com/#!/analytics/geochart

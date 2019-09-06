@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html ng-app="EmploymentsApp">
+
+<head>
+    <title>Province Employments App</title>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+
+<!--FRONTEND-->
+
+    <script type="text/javascript" src="employments-app.js"></script>
+    <script type="text/javascript" src="province-employments-frontend/v1/list-employments-ctrl.js"></script>
+    <script type="text/javascript" src="province-employments-frontend/v1/edit-employments-ctrl.js"></script>
+
+<!--VISUALIZACION HIGHCHARTS-->
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script type="text/javascript" src="analytics/highcharts-employments-ctrl.js"></script>
+
+<!--VISUALIZACION GEOCHART-->
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="analytics/geochart-employments-ctrl.js"></script>     
+  
+<!--VISUALIZACION CHARTIST-AWESOME-->
+
+	<link rel="stylesheet" href="bower_components/chartist/dist/chartist.min.css">
+    <script src="bower_components/chartist/dist/chartist.min.js"></script>
+	<script type="text/javascript" src="analytics/chartist-employments-ctrl.js"></script>
+
+<!--INTEGRACION (USO) CON PROXY A WEATHER (EXTERNA)-->
+	
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js?hcode=c11e6e3cfefb406e8ce8d99fa8368d33"></script>
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js?hcode=c11e6e3cfefb406e8ce8d99fa8368d33"></script>
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js?hcode=c11e6e3cfefb406e8ce8d99fa8368d33"></script>
+	<script src="https://cdn.anychart.com/releases/v8/js/anychart-polar.min.js?hcode=c11e6e3cfefb406e8ce8d99fa8368d33"></script>
+  	<link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css?hcode=c11e6e3cfefb406e8ce8d99fa8368d33" type="text/css" rel="stylesheet">
+  	<link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css?hcode=c11e6e3cfefb406e8ce8d99fa8368d33" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="integrations/weather-city-ctrl.js"></script>
+
+<!--INTEGRACION CORS (USO) CON AWESOMEAPI-EXCHANGE (EXTERNA)-->
+
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+	<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+	<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+	<script type="text/javascript" src="integrations/coins-ctrl.js"></script>
+
+<!--INTEGRACION CORS (VISUALIZACION) CON  GRUPO SOS05-->
+
+    <script type="text/javascript" src="integrations/employments-students-ctrl.js"></script>
+
+<!--INTEGRACION CORS (VISUALIZACION) CON  GRUPO SOS14-->
+
+    <script type="text/javascript" src="integrations/employments-deceaseds-ctrl.js"></script>
+
+</head>
+
+<body ng-view>
+
+</body>
+
+</html>

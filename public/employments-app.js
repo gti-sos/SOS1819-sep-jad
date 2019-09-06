@@ -45,6 +45,10 @@ angular
             }).when("/integrations/coins", {
                 controller: "CoinsCtrl",
                 templateUrl: "integrations/coins.html"
+			
+			}).when("/about", {
+                templateUrl: "about.html"
+			
             });
         });
             
