@@ -1,6 +1,6 @@
 # SOS1819-sep-jad
 
-- **Team**
+- **Developer**
   - [Juan Manuel Arteaga Delgado](https://github.com/juanma71)
 - **Project description**:  My information source are made for analyzing the employment by sectors and provinces in Spain.
 - **Repository**: [gti-sos/SOS1819-sep-jad](https://github.com/gti-sos/SOS1819-sep-jad.git)
