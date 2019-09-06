@@ -20,4 +20,4 @@
 - **About**:  http://sos1819-sep-jad.herokuapp.com/#!/about
   - Video: https://youtu.be/BuXPAdMMAK8
 - **Docker**:
-    docker run -p 8080:8080 -d arteagajuanma/sos1819-sep-jad/my-app
+    docker run -p 8080:8080 -d arteagajuanma/sos1819-sep-jad
