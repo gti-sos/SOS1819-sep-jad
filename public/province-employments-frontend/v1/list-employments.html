@@ -8,7 +8,7 @@
 					class="btn btn-primary btn-xs"
 					ng-click="loadProvinceEmployments()"
 					value="load"
-    			>Datos iniciales</button>
+    			>Iniciar base datos</button>
 			</td>
 			<td WIDTH="170" HEIGHT="50" align="center">
 				<button
@@ -16,23 +16,23 @@
         			ng-click="deleteProvinceEmployments()"
     			>Borrar base datos</button> 	
 			</td>
-			<td  WIDTH="400" HEIGHT="50" align="center">
-				<label>
-        			<h5>Desea los datos paginados?</h5>
-    			</label>
-    			<button
-        			class="btn btn-info btn-xs"
-        			ng-click="pagingEmployments()"
-    			>SI</button>
+			<td WIDTH="170" HEIGHT="50" align="center">
 				<button
 					class="btn btn-info btn-xs"
-        			ng-click="unpagingEmployments()"
-    			>NO</button>
+        			ng-click="reset()"
+    			>Todos los datos</button>
+			</td>
+			<td  WIDTH="170" HEIGHT="50" align="center">
+				<button
+        			class="btn btn-info btn-xs"
+        			ng-click="pagingEmployments()"
+    			>Paginar datos</button>
 			</td>
 			<td WIDTH="600" HEIGHT="50">
     			<div class="alert alert-success">
-				<h5>Estado: {{status}}</h5>
-			</div>			
+					<h5>Estado: {{status}}</h5>
+				</div>			
+			</td>
 		</tr>
 	</tbody>
 </table>
@@ -188,7 +188,13 @@
                     class="btn btn-primary btn-xs"
                     ng-click="searchByOther()"
                 >Buscar</button>
-			</td>			
+			</td>
+			<td>
+				<button
+        			class="btn btn-info btn-xs"
+        			ng-click="pagingEmployments()"
+    			>Paginar busqueda</button>
+			</td>
 		</tr>	
 	</tbody>
 </table>

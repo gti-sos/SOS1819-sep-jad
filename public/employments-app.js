@@ -6,11 +6,8 @@ angular
     .config(function($routeProvider) {
         
         $routeProvider
-            
-            .when("/", {
-                templateUrl: "index.html"
-                
-            }).when("/ui/v1/province-employments",{
+                               
+            .when("/ui/v1/province-employments",{
                 controller: "ListEmploymentsCtrl",
                 templateUrl: "province-employments-frontend/v1/list-employments.html"
                 
@@ -18,7 +15,10 @@ angular
                 controller: "EditEmploymentsCtrl",
                 templateUrl: "province-employments-frontend/v1/edit-employments.html"
         
-            }).when("/analytics/highcharts",{
+			}).when("/", {
+                templateUrl: "main.html"
+						
+			}).when("/analytics/highcharts",{
                 controller: "HighchartsEmploymentsCtrl",
                 templateUrl: "analytics/highcharts-employments.html"
     

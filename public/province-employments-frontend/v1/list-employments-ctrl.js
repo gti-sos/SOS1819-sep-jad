@@ -1,10 +1,15 @@
 /* global angular */
 
 angular
-    .module("EmploymentsApp")
-    .controller("ListEmploymentsCtrl",["$scope","$http", function($scope,$http) {
-        console.log("List controller initialized");
-        var API = "/api/v1/province-employments";
+    
+	.module("EmploymentsApp")
+    
+	.controller("ListEmploymentsCtrl",["$scope","$http", function($scope,$http) {
+    
+		console.log("List controller initialized");
+        
+		var API = "/api/v1/province-employments";
+		var searchURL = API;
         var limit = 0;          // por defecto listamos todos los recursos sin paginar
         var offset = 0;
         
@@ -16,58 +21,87 @@ angular
             refresh();
         };
         
-         $scope.unpagingEmployments = function() {
-            limit = 0;
-            $scope.status = "Datos no paginados";
-            refresh();
+        $scope.reset = function() {
+            
+			limit = 0;
+			offset = 0;
+			searchURL = API;
+            
+			$scope.status = "Mostrando todos los recursos";
+		/*	
+			$scope.newProvinceEmployment.province = "";
+			$scope.newProvinceEmployment.year = "";
+			$scope.newProvinceEmployment.industryEmployment = "";
+			$scope.newProvinceEmployment.buildingEmployment = "";
+			$scope.newProvinceEmployment.servicesEmployment = "";
+		*/	
+			refresh();
         };  
 
-        function refresh() {			// Funcion para reinicializar frontend (muestra los datos iniciales)
-            console.log("Requesting employments to <"+API+">...");       
-            $http
-				.get(API+"?limit="+limit+"&offset="+offset)
+        function refresh() {			// Funcion para refrescar datos mostrados en frontend
+            
+			console.log("Requesting employments to <"+API+">...");       
+            
+			if (searchURL == API)
+				URL = API+"?limit="+limit+"&offset="+offset;
+			else
+				URL = searchURL+"&limit="+limit+"&offset="+offset;
+			$http
+				.get(URL)
 				.then(function(response) {
-                	console.log("Data received:" + JSON.stringify(response.data, null, 2));
-                	$scope.provinceEmployments = response.data;
-            	});
-        };
+					console.log("Data received:" + JSON.stringify(response.data, null, 2));
+					$scope.provinceEmployments = response.data;
+				});
+	    };
 
 
         $scope.getNext = function() {
-            $http
-				.get(API+"?limit="+limit+"&offset="+offset)
-				.then(function(response) {
-            		if ((response.data).length == limit) {
-                		offset = offset + limit;
-            		}
-					$http
-						.get(API+"?limit="+limit+"&offset="+offset)
-						.then(function(response) {  // por que lo repite??
-							$scope.provinceEmployments = response.data;
-						});
-				}, function Error(response) {
-						$scope.provinceEmployments = [];
-					});
+            
+			offset = offset + limit;
+			
+			if (searchURL == API)
+				URL = API+"?limit="+limit+"&offset="+offset;
+			else
+				URL = searchURL+"&limit="+limit+"&offset="+offset;
+			
+			$http
+				.get(URL)
+				.then(function(response) { 
+					$scope.provinceEmployments = response.data;
+				}, function (error) {
+					$scope.provinceEmployments = [];
+					});			
         };
 
 
         $scope.getBack = function() {
-            if (offset >= limit) {
+            
+			if (offset >= limit) {
                 offset = offset - limit;
             }
             
+			if (searchURL == API)
+				URL = API+"?limit="+limit+"&offset="+offset;
+			else
+				URL = searchURL+"&limit="+limit+"&offset="+offset;
+			
             $http
-				.get(API+"?limit="+limit+"&offset="+offset)
+				.get(URL)
 				.then(function(response) {
                 	$scope.provinceEmployments = response.data;
-                }, function Error(response) {
+                }, function (error) {
                     	$scope.provinceEmployments = [];
                 	});
         };
    
         
         $scope.loadProvinceEmployments = function() {
-            $http
+            
+			limit = 0;
+			offset = 0;
+			searchURL = API;
+			
+			$http
 				.get(API+"/loadInitialData")
 				.then(function(response) {
                 	$scope.status = "BD original vacia. Datos iniciales cargados con exito";
@@ -80,18 +114,25 @@ angular
 
 
         $scope.addProvinceEmployment = function() {
-            var newProvinceEmployment = $scope.newProvinceEmployment;
-            console.log("Adding a new provinceEmployment: "+JSON.stringify(newProvinceEmployment));
+            
+			limit = 0;
+			offset = 0;
+			searchURL = API;
+			
+			var newProvinceEmployment = $scope.newProvinceEmployment;
+			
+			console.log("Adding a new provinceEmployment: "+JSON.stringify(newProvinceEmployment));
             $http
                 .post(API,newProvinceEmployment)
                 .then(function(response) {
                     console.log("POST response: "+response.status+" "+response.data);
                     $scope.status = "El recurso "+newProvinceEmployment.province+"-"+newProvinceEmployment.year+" se ha añadido con exito";
                     refresh();
-                }, function(error) {
+				}, function(error) {
 						if (error.status == 409) {
 							$scope.status = "Ya existe el recurso "+newProvinceEmployment.province+"-"+newProvinceEmployment.year;
 							refresh();
+						
 						} else {
 							$scope.status = "Alguno de los campos no ha sido rellenado correctamente";
 							refresh();
@@ -110,12 +151,17 @@ angular
                     $scope.getBack();
                 }, function(error) {
                         $scope.status = "El recurso "+province+"-"+year+" no existe";
-                        refresh();
+                        $scope.reset();
                     });
         };
 
         $scope.deleteProvinceEmployments = function() {
-            $http
+            
+			limit = 0;
+			offset = 0;
+			searchURL = API;
+			
+			$http
                 .delete(API)
                 .then(function(response) {
                     $scope.status = "Los recursos se han borrado correctamente";
@@ -125,36 +171,24 @@ angular
 
 
         $scope.searchByProvinceOrYear = function() {
-            if($scope.provinceYear=="year"){	
-				$http
-					.get(API+"/"+$scope.data)
-					.then(function(response) {
-						console.log("SEARCH response: " + response.status + " " + response.data);
-						$scope.provinceEmployments = response.data;					
-					}, function(error) {
-							$scope.status = "No existe el recurso " + $scope.data;
-							refresh();
-						});
+            	
+			$http
+				.get(API+"/"+$scope.data)
+				.then(function(response) {
+					console.log("SEARCH response: " + response.status + " " + response.data);
+					$scope.provinceEmployments = response.data;					
+				}, function(error) {
+						$scope.status = "No existen recursos " + $scope.provinceYear + ": "+ $scope.data;
+						$scope.reset();
+					});
 				
-			}
-			else if($scope.provinceYear=="province"){
-				$http
-					.get(API+"/"+$scope.data)
-					.then(function(response) {
-						console.log("SEARCH response: " + response.status + " " + response.data);
-						$scope.provinceEmployments = response.data;
-					}, function(error) {
-							$scope.status = "No existe el recurso " + $scope.data;
-							refresh();
-						});
-			}
 			$scope.provinceYear="";
 			$scope.data="";
         };
 
 
         $scope.searchByOther = function() {
-			URL = API;
+			searchURL = API;
 			fromOther = "";
 			toOther = "";
 			$scope.status = "";
@@ -163,9 +197,9 @@ angular
 			{
 				if($scope.other == "year"){
 					if(($scope.from == "") && ($scope.to == ""))   
-						URL = URL+"?"+$scope.year;
+						searchURL = searchURL+"?"+$scope.year;
 					else
-						URL = URL+"?"+"from="+$scope.from+"&to="+$scope.to;
+						searchURL = searchURL+"?"+"from="+$scope.from+"&to="+$scope.to;
 			
 				}else{
 					switch ($scope.other) {
@@ -187,38 +221,36 @@ angular
 						default:
 							return;
 					}
-					URL = URL+"?"+fromOther+"="+$scope.from+"&"+toOther+"="+$scope.to;	
+					searchURL = searchURL+"?"+fromOther+"="+$scope.from+"&"+toOther+"="+$scope.to;	
 				}		
 				
 			} else {
 				if(($scope.other == "") && ($scope.from == "") && ($scope.to == ""))
-					URL = URL+"?province="+$scope.province;
+					searchURL = searchURL+"?province="+$scope.province;
 				
 				else if(($scope.other == "year") && ($scope.from != "") && ($scope.to != ""))
-					URL = URL+"?province="+$scope.province+"&from="+$scope.from+"&to="+$scope.to;
+					searchURL = searchURL+"?province="+$scope.province+"&from="+$scope.from+"&to="+$scope.to;
 				else
-					URL = "error";			
+					searchURL = "error";			
 			}		
 					
-			if (URL != "error") {
+			if (searchURL != "error") {
 				$http
-					.get(URL)
+					.get(searchURL)
 					.then(function(response) {
                 		console.log("SEARCH response: " + response.status + " " + response.data)
                 		$scope.provinceEmployments = response.data;
 						if (response.data.length == 0) $scope.status = "No hay resultados";
 					}, function(error) {
                     		$scope.status = "Se ha producido un error";
-							refresh();
+							$scope.reset();
                 		});
 			
 			} else {
 				$scope.status = "Busqueda erronea";
-				refresh();
+				$scope.reset();
 			}
-		
-			// $scope.limit = limit;
-			// $scope.offset = offset;
+
 			$scope.province = "";
 			$scope.other = "";
 			$scope.from = "";

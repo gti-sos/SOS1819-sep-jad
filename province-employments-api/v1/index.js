@@ -434,8 +434,10 @@ module.exports = function(app, BASE_PATH, provinceEmployments){
         var newProvinceEmployments = req.body;
 
         if (Object.keys(newProvinceEmployments).length != 5 || !newProvinceEmployments.province || !newProvinceEmployments.year || !newProvinceEmployments.industryEmployment || !newProvinceEmployments.buildingEmployment || !newProvinceEmployments.servicesEmployment) {
-        // si el recurso pasado no tiene el formato correcto: tiene campos de más o falta algún campo de los exigidos 
-            res.sendStatus(400);        // 400 Bad Request
+
+// Comprobamos si el recurso pasado no tiene el formato correcto: campos de más o menos o falta algún campo
+            
+			res.sendStatus(400);        // 400 Bad Request
 
         } else {
             provinceEmployments.find({
